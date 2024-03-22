@@ -1,13 +1,18 @@
-import './App.css'
+import Home from "./Components/Home";
+import { BrowserRouter, Routes, Route } from "react-router-dom";
+import Signup from "./Components/Signup";
 
 function App() {
-
-
   return (
     <>
-     <h1>Expense Management</h1>
+      <BrowserRouter>
+        <Routes>
+          <Route path="/" element={<Home />}></Route>
+          <Route path="/signin" element={<Signup />}></Route>
+        </Routes>
+      </BrowserRouter>
     </>
-  )
+  );
 }
 
-export default App
+export default App;

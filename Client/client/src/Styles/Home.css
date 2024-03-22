@@ -1,0 +1,50 @@
+.statement {
+  width: 500px;
+  word-spacing: 10px;
+  margin-top: 80px;
+  margin-left: 100px;
+  line-height: 50px;
+}
+
+.container {
+  display: flex;
+  justify-content: space-between;
+}
+.started {
+  height: 40px;
+  width: 150px;
+  margin-top: 40px;
+  margin-left: 100px;
+  border-radius: 20px;
+  background-color: #037435;
+  color: white;
+  /* cursor: pointer; */
+}
+.getstart {
+  color: white;
+  text-decoration: none;
+  font-size: 15px;
+}
+.substatement {
+  color: grey;
+  margin-top: 40px;
+  margin-left: 100px;
+  font-weight: 400;
+  line-height: 22px;
+}
+.mainimg1 {
+  margin-left: 400px;
+  margin-top: 20px;
+}
+
+.mainimg2 {
+  z-index: 2;
+  margin-right: 100px;
+  margin-top: -150px;
+  margin-left: 180px;
+}
+
+.content {
+  display: flex;
+  flex-direction: column;
+}
