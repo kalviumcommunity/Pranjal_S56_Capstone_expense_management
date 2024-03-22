@@ -3,7 +3,7 @@ import Navbar from "./Navbar";
 import "../Styles/Home.css";
 import mainimg1 from "../images/mainimg.jpg";
 import mainimg2 from "../images/mainimg2.jpg";
-import { Link } from "react-router-dom";
+import { Link,NavLink } from "react-router-dom";
 
 
 function Home() {
@@ -18,9 +18,9 @@ function Home() {
             Expenses with Our Intuitive Platform.
           </h1>
           <button className="started">
-            <Link to={"/signin"}>
+            <NavLink to={"/signin"}>
               <p className="getstart">Get Started</p>
-            </Link>
+            </NavLink>
           </button>
           <p className="substatement">
             Redefine the way you manage your finances and elevate your financial
@@ -31,8 +31,8 @@ function Home() {
           </p>
         </div>
         <div className="imgs">
-          <img className="mainimg1" width={400} src={mainimg1} alt="" />
-          <img className="mainimg2" width={300} src={mainimg2} alt="" />
+          <img className="mainimg1"  src={mainimg1} alt="" />
+          <img className="mainimg2"  src={mainimg2} alt="" />
         </div>
       </div>
     </>

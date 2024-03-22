@@ -13,9 +13,9 @@ function Signup() {
         
         <h2>Sign Up</h2>
         <label >Username: <input type="text" placeholder="Enter your name" /></label>
-        <label >Email Id: <input type="text" placeholder="Enter your name" /></label>
-        <label >Password: <input type="password" placeholder="Enter your name" /></label>
-        <label >Confirm Password: <input type="password" placeholder="Enter your name" /></label>
+        <label >Email Id: <input type="text" placeholder="Enter valid Email Id" /></label>
+        <label >Password: <input type="password" placeholder="Enter your password" /></label>
+        <label >Confirm Password: <input type="password" placeholder="Confirm password" /></label>
       
         </form>
     </>

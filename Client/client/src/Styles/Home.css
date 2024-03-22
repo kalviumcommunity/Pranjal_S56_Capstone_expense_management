@@ -35,6 +35,7 @@
 .mainimg1 {
   margin-left: 400px;
   margin-top: 20px;
+  width: 400px;
 }
 
 .mainimg2 {
@@ -42,6 +43,7 @@
   margin-right: 100px;
   margin-top: -150px;
   margin-left: 180px;
+  width: 300px;
 }
 
 .content {
