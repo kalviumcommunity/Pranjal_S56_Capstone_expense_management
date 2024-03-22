@@ -1,0 +1,15 @@
+.top {
+  width: 100%;
+  background-color: #222833;
+}
+.iconlogo {
+  margin-left: 650px;
+}
+.signupbox{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    border: 2px solid black;
+    width: 600px;
+    margin-left: 450px;
+}
