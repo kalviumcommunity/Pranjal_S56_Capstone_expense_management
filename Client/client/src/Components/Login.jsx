@@ -11,28 +11,28 @@ function Login() {
   const navigate = useNavigate()
 
   const handleSubmit = (e) => {
-  //   e.preventDefault();
-  //   if (userInput.trim() === "") {
-  //     setUserError("Username is required");
-  //   } else {
-  //     setUserError("");
-  //   }
-  //   if (password.trim() === "") {
-  //     setPasswordError("Password is required");
-  //   } else {
-  //     setPasswordError("");
-  //   }
-  //   // Additional validation logic can be added here, such as checking username/password against a database
+    e.preventDefault();
+    if (userInput.trim() === "") {
+      setUserError("Username is required");
+    } else {
+      setUserError("");
+    }
+    if (password.trim() === "") {
+      setPasswordError("Password is required");
+    } else {
+      setPasswordError("");
+    }
+    // Additional validation logic can be added here, such as checking username/password against a database
     
-  //   // If both fields are filled, proceed with login
-  //   if (userInput.trim() !== "" && password.trim() !== "") {
-  //     // Perform login logic here
-  //     alert("You have Logged in successfully!")
-  //     navigate("/")
-  //   }
-  //   else{
-  //     alert("Please fill both fields")
-  //   }
+    // If both fields are filled, proceed with login
+    if (userInput.trim() !== "" && password.trim() !== "") {
+      // Perform login logic here
+      alert("You have Logged in successfully!")
+      navigate("/")
+    }
+    else{
+      alert("Please fill both fields")
+    }
   }
 
   return (
