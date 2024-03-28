@@ -11,17 +11,25 @@
   color: white;
   justify-content: space-between;
 }
-
+.imglogo{
+  margin-left: 30px;
+}
 .tags {
   display: flex;
   margin-top: 50px;
   margin-right: 10px;
 }
-
+.nav{
+  text-decoration: none;
+}
+.tag:hover{
+  color: #08bb58;
+}
 .tag {
   font-size: 18px;
   margin-right: 110px;
   cursor: pointer;
+  text-decoration: none;
 }
 
 .logout {

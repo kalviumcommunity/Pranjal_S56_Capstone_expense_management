@@ -1,12 +1,13 @@
-*{
-  color: white;
-}
+
 .top {
   width: 100%;
   background-color: #222833;
 }
 .iconlogo {
   margin-left: 650px;
+}
+.signuphead{
+  color: white;
 }
 .signupbox{
     display: flex;
@@ -16,20 +17,30 @@
     border: 2px solid black;
     width: 600px;
     margin-left: 450px;
-    margin-top: 100px;
+    margin-top: 30px;
     background-color:#222833 ;
     padding-top: 20px;
     padding-bottom: 20px;
     
 }
 .inpbox{
-  width: 300px;
+  width: 370px;
   height: 30px;
   align-items: center;
-  border-radius: 15px;
   padding-left: 10px;
+  margin-top: 10px;
+  color: black;
 }
 .labels{
   margin: 20px;
+  color: white;
+}
 
+.signin{
+  color: white;
+  width: 130px;
+  height: 35px;
+  border-radius: 20px;
+  margin-top: 20px;
+  background-color: #037435;
 }
