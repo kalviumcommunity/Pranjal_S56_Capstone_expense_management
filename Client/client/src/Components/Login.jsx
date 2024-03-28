@@ -1,39 +1,37 @@
 import React, { useState } from 'react';
 import "../Styles/Login.css";
 import logo from "../images/Logo.png";
-import { NavLink, Navigate, useNavigate } from 'react-router-dom';
+import { NavLink, useNavigate } from 'react-router-dom';
 
 function Login() {
   const [userInput, setUserInput] = useState("");
   const [password, setPassword] = useState("");
   const [userError, setUserError] = useState("");
   const [passwordError, setPasswordError] = useState("");
-  const navigate = useNavigate()
+  const [message, setMessage] = useState(""); // New state for displaying messages
+  const navigate = useNavigate();
 
   const handleSubmit = (e) => {
-  //   e.preventDefault();
-  //   if (userInput.trim() === "") {
-  //     setUserError("Username is required");
-  //   } else {
-  //     setUserError("");
-  //   }
-  //   if (password.trim() === "") {
-  //     setPasswordError("Password is required");
-  //   } else {
-  //     setPasswordError("");
-  //   }
-  //   // Additional validation logic can be added here, such as checking username/password against a database
+    e.preventDefault();
+    if (userInput.trim() === "") {
+      setUserError("Username is required");
+    } else {
+      setUserError("");
+    }
+    if (password.trim() === "") {
+      setPasswordError("Password is required");
+    } else {
+      setPasswordError("");
+    }
     
-  //   // If both fields are filled, proceed with login
-  //   if (userInput.trim() !== "" && password.trim() !== "") {
-  //     // Perform login logic here
-  //     alert("You have Logged in successfully!")
-  //     navigate("/")
-  //   }
-  //   else{
-  //     alert("Please fill both fields")
-  //   }
-  }
+    if (userInput.trim() !== "" && password.trim() !== "") {
+      // Perform login logic here
+      setMessage("You have logged in successfully!");
+      navigate("/");
+    } else {
+      setMessage("Please fill both fields.");
+    }
+  };
 
   return (
     <>
@@ -69,9 +67,10 @@ function Login() {
           {passwordError && <div className="error">{passwordError}</div>}
         </div>
         <button className='loginBtn'>Login</button>
+        {message && <div className="message">{message}</div>} {/* Rendering the message */}
       </form>
     </>
-  )
+  );
 }
 
 export default Login;
