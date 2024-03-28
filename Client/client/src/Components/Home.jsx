@@ -18,7 +18,7 @@ function Home() {
             Expenses with Our Intuitive Platform.
           </h1>
           <button className="started">
-            <NavLink to={"/signin"}>
+            <NavLink className= "nave"to={"/signin"}>
               <p className="getstart">Get Started</p>
             </NavLink>
           </button>

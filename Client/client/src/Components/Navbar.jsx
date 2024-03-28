@@ -1,6 +1,7 @@
 import React from "react";
 import logo from "../images/Logo.png";
 import "../Styles/Navbar.css";
+import { NavLink } from "react-router-dom"; 
 
 function Navbar() {
   return (
@@ -8,14 +9,14 @@ function Navbar() {
       <div className="main">
         <div className="nav">
           <div className="img">
-            <img width={200} src={logo} alt="" />
+            <img className="imglogo" width={200} src={logo} alt="" />
           </div>
 
           <div className="tags">
-            <p className="tag">Dashboard</p>
-            <p className="tag">Friends</p>
-            <p className="tag">About us</p>
-            <p className="tag">Login</p>
+           <NavLink className="nav" to={"/dashboard"}> <p className="tag">Dashboard</p></NavLink>
+            <NavLink className="nav" to={"/friends"}><p className="tag">Friends</p></NavLink>
+            <NavLink className="nav" to={"/aboutus"}><p className="tag">About us</p></NavLink>
+            <NavLink className="nav" to={"/login"}><p className="tag">Login</p></NavLink>
 
             <button className="logout">Logout</button>
           </div>
