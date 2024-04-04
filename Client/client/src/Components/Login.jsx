@@ -8,8 +8,9 @@ function Login() {
   const [password, setPassword] = useState("");
   const [userError, setUserError] = useState("");
   const [passwordError, setPasswordError] = useState("");
-  const [message, setMessage] = useState(""); // New state for displaying messages
+  const [message, setMessage] = useState(""); 
   const navigate = useNavigate();
+
 
   const handleSubmit = (e) => {
     e.preventDefault();
@@ -24,8 +25,8 @@ function Login() {
       setPasswordError("");
     }
     
+    
     if (userInput.trim() !== "" && password.trim() !== "") {
-      // Perform login logic here
       setMessage("You have logged in successfully!");
       navigate("/");
     } else {
@@ -67,7 +68,7 @@ function Login() {
           {passwordError && <div className="error">{passwordError}</div>}
         </div>
         <button className='loginBtn'>Login</button>
-        {message && <div className="message">{message}</div>} {/* Rendering the message */}
+        {message && <div className="message">{message}</div>} 
       </form>
     </>
   );
