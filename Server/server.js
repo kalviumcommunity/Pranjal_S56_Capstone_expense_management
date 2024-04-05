@@ -1,10 +1,10 @@
-const express = require("express")
-const cors = require("cors")
+const express = require("express");
+const cors = require("cors");
 require("dotenv").config();
 const { connected } = require("./config/db");
 const joi = require("joi");
-const {userModel,validateUsers} = require("./models/model")
-const axios = require("axios")
+const { userModel, validateUsers } = require("./models/model");
+const axios = require("axios");
 
 const app = express();
 const port = process.env.PUBLIC_PORT || 3000;
@@ -16,16 +16,24 @@ app.get('/users', async (req, res) => {
     try {
         const ans = await userModel.find({});
         res.send(ans);
-    } catch(error) {
-        res.send(error);
+    } catch (error) {
+        res.status(500).send(error);
     }
 });
 
+app.post("/newuser", async (req, res) => {
 
+    try {
+        const newUser = await userModel.create(req.body);
+        res.json(newUser);
+    } catch (error) {
+        res.status(500).send("Error while posting the data: " + error);
+    }
+});
 
 app.listen(port, () => {
     connected();
     console.log(`🚀 server running on PORT: ${port}`);
-  });
-  
-  module.exports = app;
+});
+
+module.exports = app;
