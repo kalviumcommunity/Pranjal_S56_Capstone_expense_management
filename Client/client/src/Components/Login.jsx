@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import "../Styles/Login.css";
 import logo from "../images/Logo.png";
 import { NavLink, useNavigate } from 'react-router-dom';
+import axios from 'axios'
 
 function Login() {
   const [userInput, setUserInput] = useState("");
@@ -25,13 +26,18 @@ function Login() {
       setPasswordError("");
     }
     
+    const loginData = ({
+      name : userInput,
+      password : password
+    })
+    axios.post("http://localhost:3000/login",loginData)
+    .then((res)=>{
+      alert(res.data);
+    }).catch((err)=>{
+      console.error(err)
+    })
     
-    if (userInput.trim() !== "" && password.trim() !== "") {
-      setMessage("You have logged in successfully!");
-      navigate("/");
-    } else {
-      setMessage("Please fill both fields.");
-    }
+  
   };
 
   return (

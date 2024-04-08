@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import logo from "../images/Logo.png";
 import "../Styles/Signup.css";
 import { NavLink, useNavigate } from "react-router-dom";
+import axios from 'axios'
 
 function Signup() {
   const [username, setUsername] = useState("");
@@ -17,10 +18,20 @@ function Signup() {
     if (password !== confirmPass) {
       setError("Passwords do not match");
     } else {
-      alert("Signup successful!");
-      navigate("/")
+      const userData = {
+        name: username, 
+        email: email,
+        password: password
+      };
+
+      axios.post("http://localhost:3000/register", userData)
+        .then((res) => {
+          alert(res.data);
+          navigate("/")
+        }).catch((err) => {
+          console.log(err)
+        })
     }
-    
   };
 
   return (
