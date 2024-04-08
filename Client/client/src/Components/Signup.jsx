@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import logo from "../images/Logo.png";
 import "../Styles/Signup.css";
 import { NavLink, useNavigate } from "react-router-dom";
+import axios from "axios";
 
 function Signup() {
   const [username, setUsername] = useState("");
@@ -9,7 +10,7 @@ function Signup() {
   const [password, setPassword] = useState("");
   const [confirmPass, setConfirmPass] = useState("");
   const [error, setError] = useState("");
-  const navigate = useNavigate()
+  const navigate = useNavigate();
 
   const handleSubmit = (e) => {
     e.preventDefault();
@@ -17,10 +18,25 @@ function Signup() {
     if (password !== confirmPass) {
       setError("Passwords do not match");
     } else {
-      alert("Signup successful!");
-      navigate("/")
+      const userData = {
+        name: username,
+        email: email,
+        password: password,
+      };
+
+      axios
+        .post(
+          "https://pranjal-s56-capstone-expense-management-2.onrender.com/register",
+          userData
+        )
+        .then((res) => {
+          alert(res.data);
+          navigate("/");
+        })
+        .catch((err) => {
+          console.log(err);
+        });
     }
-    
   };
 
   return (

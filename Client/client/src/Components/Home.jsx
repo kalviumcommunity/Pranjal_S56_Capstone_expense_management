@@ -6,7 +6,11 @@ import mainimg2 from "../images/mainimg2.jpg";
 import { Link,NavLink } from "react-router-dom";
 
 
+
 function Home() {
+
+  
+
   return (
     <>
       <Navbar />
