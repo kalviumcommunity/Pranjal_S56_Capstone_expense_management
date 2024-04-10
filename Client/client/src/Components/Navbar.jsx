@@ -9,7 +9,7 @@ function Navbar() {
       <div className="main">
         <div className="nav">
           <div className="img">
-            <img className="imglogo" width={200} src={logo} alt="" />
+            <NavLink to={"/"}><img className="imglogo" width={200} src={logo} alt="" /></NavLink>
           </div>
 
           <div className="tags">
