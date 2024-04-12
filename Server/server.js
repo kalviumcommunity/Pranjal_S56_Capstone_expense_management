@@ -3,7 +3,7 @@ const cors = require("cors");
 require("dotenv").config();
 const { connected } = require("./config/db");
 const joi = require("joi");
-const { userModel, validateUsers } = require("./models/model");
+const { userModel } = require("./models/model");
 const bcrypt = require("bcrypt");
 const axios = require("axios");
 
@@ -22,16 +22,15 @@ app.get("/users", async (req, res) => {
   }
 });
 
-
 app.post("/register", async (req, res) => {
   const data = req.body;
-  const emailverify = await userModel.findOne({ email: data.email });
+  const emailVerify = await userModel.findOne({ email: data.email });
 
-  if (emailverify) {
+  if (emailVerify) {
     res.send("User already exists");
   } else {
     try {
-      let hashPassword = await bcrypt.hash(
+      const hashPassword = await bcrypt.hash(
         data.password,
         parseInt(process.env.LEVEL)
       );
@@ -44,20 +43,23 @@ app.post("/register", async (req, res) => {
   }
 });
 
-
 app.post("/login", async (req, res) => {
   const data = req.body;
-  console.log(data);
   const user = await userModel.findOne({ name: data.name });
-  if (user) {
-    let hashPassword = await bcrypt.compare(data.password, user.password);
-    if (hashPassword) {
+
+  if (!user) {
+    return res.send("User not found. Please create an account.");
+  }
+
+  try {
+    const hashPasswordMatch = await bcrypt.compare(data.password, user.password);
+    if (hashPasswordMatch) {
       res.send("You logged in successfully");
     } else {
       res.send("Incorrect password");
     }
-  } else {
-    res.send("User not found. Please create an account.");
+  } catch (error) {
+    res.status(500).send("Error while comparing passwords: " + error);
   }
 });
 
