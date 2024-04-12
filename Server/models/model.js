@@ -23,14 +23,7 @@ const validateUser = (user) => {
     password: joi.string().required(),
   });
 
-  try {
-    const validationResult = schema.validate(user);
-    return validationResult;
-  } catch (error) {
-   
-    console.error("Joi validation error:", error.message);
-    throw new Error("Invalid user data");
-  }
+  return schema.validate(user);
 };
 
 const userModel = mongoose.model("registerusers", userSchema);

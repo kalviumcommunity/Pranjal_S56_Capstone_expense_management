@@ -1,13 +1,13 @@
 import React from 'react'
 import "../Styles/Dashboard.css"
-import Navbar from './Navbar'
+// import Navbar from './Navbar'
+import Layout from "./Layout";
 
 function Dashboard() {
   return (
-    <>
-    <Navbar/>
-    <div>Dashboard</div>
-    </>
+    <Layout>
+    <div><p>Dashboard</p></div>
+  </Layout>
   )
 }
 

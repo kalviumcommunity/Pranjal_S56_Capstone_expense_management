@@ -1,15 +1,12 @@
-import React from 'react';
-import "../Styles/Aboutus.css";
-import Navbar from './Navbar';
+// Aboutus.jsx
+import React from "react";
+import Layout from "./Layout";
 
 function Aboutus() {
   return (
-    <>
-      <Navbar/>
-      <div className="aboutus-container">
-       
-      </div>
-    </>
+    <Layout>
+      <div><h1>about us</h1></div>
+    </Layout>
   );
 }
 

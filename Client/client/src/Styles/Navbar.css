@@ -11,20 +11,25 @@
   color: white;
   justify-content: space-between;
 }
-.imglogo{
+
+.imglogo {
   margin-left: 30px;
 }
+
 .tags {
   display: flex;
   margin-top: 50px;
   margin-right: 10px;
 }
-.nav{
+
+.nav {
   text-decoration: none;
 }
-.tag:hover{
+
+.tag:hover {
   color: #08bb58;
 }
+
 .tag {
   font-size: 18px;
   margin-right: 110px;

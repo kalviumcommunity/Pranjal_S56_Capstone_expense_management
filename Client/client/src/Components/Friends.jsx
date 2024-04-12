@@ -1,13 +1,13 @@
 import React from 'react'
 import "../Styles/Friends.css"
 import Navbar from './Navbar'
+import Layout from './Layout'
 
 function Friends() {
   return (
-    <>
-    <Navbar/>
-    <div>Friends</div>
-    </>
+   <Layout>
+    <p>friends</p>
+   </Layout>
   )
 }
 
