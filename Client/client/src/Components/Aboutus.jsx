@@ -1,13 +1,16 @@
-import React from 'react'
-import "../Styles/Aboutus.css"
-import Navbar from './Navbar'
+import React from 'react';
+import "../Styles/Aboutus.css";
+import Navbar from './Navbar';
 
 function Aboutus() {
   return (
     <>
-  <Navbar/>
+      <Navbar/>
+      <div className="aboutus-container">
+       
+      </div>
     </>
-  )
+  );
 }
 
-export default Aboutus
+export default Aboutus;

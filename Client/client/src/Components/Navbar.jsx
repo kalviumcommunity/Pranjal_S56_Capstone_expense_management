@@ -9,7 +9,7 @@ function Navbar() {
       <div className="main">
         <div className="nav">
           <div className="img">
-            <NavLink to={"/"}><img className="imglogo" width={200} src={logo} alt="" /></NavLink>
+            <NavLink to={"/"}><img className="imglogo" width={200} src={logo} alt="ifinance-logo" /></NavLink>
           </div>
 
           <div className="tags">
