@@ -1,20 +1,13 @@
 import React from "react";
-import Navbar from "./Navbar";
+import Layout from "./Layout";
 import "../Styles/Home.css";
 import mainimg1 from "../images/mainimg.jpg";
 import mainimg2 from "../images/mainimg2.jpg";
-import { Link,NavLink } from "react-router-dom";
-
-
+import { NavLink } from "react-router-dom";
 
 function Home() {
-
-  
-
   return (
-    <>
-      <Navbar />
-
+    <Layout>
       <div className="container">
         <div className="content">
           <h1 className="statement">
@@ -22,7 +15,7 @@ function Home() {
             Expenses with Our Intuitive Platform.
           </h1>
           <button className="started">
-            <NavLink className= "nave"to={"/signin"}>
+            <NavLink className="nave" to={"/signin"}>
               <p className="getstart">Get Started</p>
             </NavLink>
           </button>
@@ -35,11 +28,11 @@ function Home() {
           </p>
         </div>
         <div className="imgs">
-          <img className="mainimg1"  src={mainimg1} alt="" />
-          <img className="mainimg2"  src={mainimg2} alt="" />
+          <img className="mainimg1" src={mainimg1} alt="" />
+          <img className="mainimg2" src={mainimg2} alt="" />
         </div>
       </div>
-    </>
+    </Layout>
   );
 }
 

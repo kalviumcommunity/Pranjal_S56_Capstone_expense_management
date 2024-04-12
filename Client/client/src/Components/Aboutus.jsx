@@ -1,12 +1,13 @@
-import React from 'react'
-import "../Styles/Aboutus.css"
+// Aboutus.jsx
+import React from "react";
+import Layout from "./Layout";
 
 function Aboutus() {
   return (
-    <>
-  
-    </>
-  )
+    <Layout>
+      <div><h1>about us</h1></div>
+    </Layout>
+  );
 }
 
-export default Aboutus
+export default Aboutus;
