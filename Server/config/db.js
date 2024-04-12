@@ -1,5 +1,5 @@
-let mongoose = require("mongoose");
 require("dotenv").config();
+let mongoose = require("mongoose");
 
 let connected = async () => {
   try {
@@ -9,6 +9,7 @@ let connected = async () => {
     console.log(error);
   }
 };
+
 const isConnected = () => {
   return mongoose.connection.readyState === 1;
 };
