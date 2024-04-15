@@ -4,6 +4,7 @@ import "../Styles/Home.css";
 import mainimg1 from "../images/mainimg.jpg";
 import mainimg2 from "../images/mainimg2.jpg";
 import { NavLink } from "react-router-dom";
+import Footer from "./Footer";
 
 function Home() {
   return (
@@ -32,6 +33,7 @@ function Home() {
           <img className="mainimg2" src={mainimg2} alt="" />
         </div>
       </div>
+      <Footer/>
     </Layout>
   );
 }
