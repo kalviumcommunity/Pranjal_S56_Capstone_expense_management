@@ -12,11 +12,12 @@ const port = process.env.PUBLIC_PORT || 3000;
 
 app.use(express.json());
 app.use(cors());
+app.use('/transactions',require("./routes"))
 
 app.get("/users", async (req, res) => {
   try {
-    const ans = await userModel.find({});
-    res.send(ans);
+    const answer = await userModel.find({});
+    res.send(answer)
   } catch (error) {
     res.status(500).send(error);
   }
@@ -62,6 +63,7 @@ app.post("/login", async (req, res) => {
     res.status(500).send("Error while comparing passwords: " + error);
   }
 });
+
 
 app.listen(port, () => {
   connected();

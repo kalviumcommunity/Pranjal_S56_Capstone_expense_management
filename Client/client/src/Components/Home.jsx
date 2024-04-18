@@ -40,20 +40,19 @@ function Home() {
         <h1>How it Works?</h1>
         <div className="contain">
           <div className="box">
-            <h2><RiDashboardFill /><br />Dashboard</h2>
+            <h2 style={{ fontSize: '30px' }}><RiDashboardFill /><br />Dashboard</h2>
             <p>Our intuitive dashboard provides a comprehensive overview of your expenses. Track your spending habits, view transaction history, and gain insights into your financial activities.</p>
             <p>Visualize your expenses through interactive tables, diagrams, and pie charts. Analyze your expenditure patterns and make informed financial decisions.</p>
           </div>
           <div className="box">
-            <h2><FaUserFriends /> <br />Friends Section</h2>
+            <h2 style={{ fontSize: '30px' }}><FaUserFriends /> <br />Friends Section</h2>
             <p>Easily manage shared expenses with friends and family. Keep track of money owed and payments made among your social circle.</p>
             <p>Collaborate on expenses, split bills seamlessly, and ensure everyone stays on top of their financial commitments.</p>
           </div>
           <div className="box">
-            <h2><FcAbout /> <br />About Us</h2>
+            <h2 style={{ fontSize: '30px' }}><FcAbout /> <br />About Us</h2>
             <p>Learn more about iFinance and our mission to revolutionize expense management.</p>
             <p>Discover our commitment to providing innovative solutions for businesses and individuals alike.</p>
-            
           </div>
         </div>
       </div>
