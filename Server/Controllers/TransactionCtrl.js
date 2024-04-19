@@ -15,19 +15,25 @@ const GetAllTransaction = async (req, res) => {
 
 const AddTransaction = async (req, res) => {
   console.log(req.body);
-  let user = await userModel.findOne({ name: req.body.email });
-  console.log(user);
-  if (user) {
-    try {
-      await TransactionModel.create({ ...req.body.data, userid: user._id });
-
-      res.status(201).send("New Transaction created");
-    } catch (error) {
-      console.log(error);
-      res.status(500).json(error);
+  try {
+    let user = await userModel.findOne({ name: req.body.email });
+    console.log(user);
+    if (user) {
+      // Check if user is not null before accessing user._id
+      if (user._id) {
+        await TransactionModel.create({ ...req.body.data, userid: user._id });
+        res.status(201).send("New Transaction created");
+      } else {
+        console.log("Error: User ID not found");
+        res.status(500).send("Error: User ID not found");
+      }
+    } else {
+      console.log("User not found");
+      res.status(404).send("User not found");
     }
-  } else {
-    console.log("error");
+  } catch (error) {
+    console.log(error);
+    res.status(500).json(error);
   }
 };
 

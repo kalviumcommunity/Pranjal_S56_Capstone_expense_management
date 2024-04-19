@@ -8,28 +8,33 @@ import FormItem from 'antd/es/form/FormItem';
 function Dashboard() {
   const [showModal, setShowModal] = useState(false);
   const [loading, setLoading] = useState(false);
-  
 
   // form handling
   const handleSubmit = async (values) => {
     try {
       const user = localStorage.getItem('user');
-      console.log(user)
+      console.log(user);
+      
       // Save to MongoDB
       setLoading(true);
       await axios.post('http://localhost:3000/add-transaction', {data : values , email : user})
         .then((res)=>{
           setLoading(false);
-      
-      // Save to localStorage
-          const transactions = JSON.parse(localStorage.getItem('transactions')) || [];
-          const newTransaction = { ...values, userid: user._id };
-          localStorage.setItem('transactions', JSON.stringify([...transactions, newTransaction]));
+          
+          // Save to localStorage
+          try {
+            let transactions = JSON.parse(localStorage.getItem('transactions')) || [];
+            const newTransaction = { ...values, userid: user._id };
+            transactions = [...transactions, newTransaction];
+            localStorage.setItem('transactions', JSON.stringify(transactions));
+          } catch (parseError) {
+            console.error('Error parsing JSON:', parseError);
+            // Handle parse error, e.g., clear localStorage or show a message to the user
+          }
           
           message.success('Transaction Added successfully');
           setShowModal(false);
-        })
-      
+        });
     } catch (error) {
       setLoading(false);
       message.error('Failed to add the transaction');
