@@ -13,20 +13,23 @@ function Dashboard() {
   // form handling
   const handleSubmit = async (values) => {
     try {
-      const user = JSON.parse(localStorage.getItem('user'));
-      
+      const user = localStorage.getItem('user');
+      console.log(user)
       // Save to MongoDB
       setLoading(true);
-      await axios.post('http://localhost:3000/add-transaction', { ...values, userid: user._id });
-      setLoading(false);
+      await axios.post('http://localhost:3000/add-transaction', {data : values , email : user})
+        .then((res)=>{
+          setLoading(false);
       
       // Save to localStorage
-      const transactions = JSON.parse(localStorage.getItem('transactions')) || [];
-      const newTransaction = { ...values, userid: user._id };
-      localStorage.setItem('transactions', JSON.stringify([...transactions, newTransaction]));
+          const transactions = JSON.parse(localStorage.getItem('transactions')) || [];
+          const newTransaction = { ...values, userid: user._id };
+          localStorage.setItem('transactions', JSON.stringify([...transactions, newTransaction]));
+          
+          message.success('Transaction Added successfully');
+          setShowModal(false);
+        })
       
-      message.success('Transaction Added successfully');
-      setShowModal(false);
     } catch (error) {
       setLoading(false);
       message.error('Failed to add the transaction');

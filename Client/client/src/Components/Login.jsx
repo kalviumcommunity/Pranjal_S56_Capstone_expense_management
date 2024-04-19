@@ -31,14 +31,15 @@ function Login() {
     };
     axios
       .post(
-        "https://pranjal-s56-capstone-expense-management-2.onrender.com/login",
+        "http://localhost:3000/login",
         loginData
       )
       .then((res) => {
         alert(res.data);
         if(res.data === "You logged in successfully"){
+          localStorage.setItem("user",loginData.name)
           navigate("/")
-        }
+      }
       })
       .catch((err) => {
         console.error(err);

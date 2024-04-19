@@ -8,4 +8,4 @@ router.post("/add-transaction", AddTransaction)
 // get transaction
 router.post("/get-transaction",GetAllTransaction)
 
-module.exports = router
+module.exports = {router}
