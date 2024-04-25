@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import "../Styles/Login.css";
 import logo from "../images/Logo.png";
-import { NavLink, useNavigate } from "react-router-dom";
+import { Link, NavLink, useNavigate } from "react-router-dom";
 import axios from "axios";
 
 function Login() {
@@ -41,11 +41,16 @@ function Login() {
           localStorage.setItem("token", res.data.token); 
           localStorage.setItem("user", loginData.name);
           
+          console.log(res.data)
+          alert(res.data.message); 
+          
+          navigate("/");
         } 
-        console.log(res.data)
-        alert(res.data.message); 
+        else{
+          alert("User not found. Please create an account.")
+        }
+
         
-        navigate("/");
         
       })
       .catch((err) => {
@@ -92,6 +97,11 @@ function Login() {
         </div>
         <button className="loginBtn">Login</button>
         {message && <div className="message">{message}</div>}
+
+        <p className="register-link">
+            Don't have an account?{" "}
+            <NavLink to="/signin" className={"navsign"}>Register</NavLink>
+          </p>
       </form>
     </>
   );

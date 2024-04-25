@@ -48,7 +48,7 @@ app.post("/login", async (req, res) => {
   try {
     const user = await userModel.findOne({name});
     if (!user) {
-      return res.status(404).send("User not found. Please create an account.");
+      return res.send("User not found. Please create an account.");
     }
     const hashPasswordMatch = await bcrypt.compare(password, user.password);
     if (hashPasswordMatch) {

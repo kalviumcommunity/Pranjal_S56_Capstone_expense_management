@@ -102,6 +102,9 @@ function Signup() {
         </label>
         {error && <div className="error">{error}</div>}
         <button className="signin">Sign in</button>
+        <p className="login-link">
+          Already have an account? <NavLink to="/login" className={"navlog"}>Login</NavLink>
+        </p>
       </form>
     </>
   );
