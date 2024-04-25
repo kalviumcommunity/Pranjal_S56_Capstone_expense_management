@@ -16,11 +16,13 @@ function Login() {
     e.preventDefault();
     if (userInput.trim() === "") {
       setUserError("Username is required");
+      return;
     } else {
       setUserError("");
     }
     if (password.trim() === "") {
       setPasswordError("Password is required");
+      return;
     } else {
       setPasswordError("");
     }
@@ -35,11 +37,16 @@ function Login() {
         loginData
       )
       .then((res) => {
-        alert(res.data);
-        if(res.data === "You logged in successfully"){
-          localStorage.setItem("user",loginData.name)
-          navigate("/")
-      }
+        if (res.data.token) {
+          localStorage.setItem("token", res.data.token); 
+          localStorage.setItem("user", loginData.name);
+          
+        } 
+        console.log(res.data)
+        alert(res.data.message); 
+        
+        navigate("/");
+        
       })
       .catch((err) => {
         console.error(err);
