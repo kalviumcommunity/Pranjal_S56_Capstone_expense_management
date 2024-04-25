@@ -26,7 +26,7 @@ function Signup() {
 
       axios
         .post(
-          "https://pranjal-s56-capstone-expense-management-2.onrender.com/register",
+          "http://localhost:3000/register",
           userData
         )
         .then((res) => {
@@ -102,6 +102,9 @@ function Signup() {
         </label>
         {error && <div className="error">{error}</div>}
         <button className="signin">Sign in</button>
+        <p className="login-link">
+          Already have an account? <NavLink to="/login" className={"navlog"}>Login</NavLink>
+        </p>
       </form>
     </>
   );
