@@ -8,9 +8,11 @@ const jwt = require("jsonwebtoken");
 
 const app = express();
 const port = process.env.PUBLIC_PORT || 3000;
+const {router} = require("./routes.js")
 
 app.use(express.json());
 app.use(cors());
+app.use(router)
 
 app.get("/users", async (req, res) => {
   try {
@@ -53,7 +55,7 @@ app.post("/login", async (req, res) => {
     const hashPasswordMatch = await bcrypt.compare(password, user.password);
     if (hashPasswordMatch) {
       const token = jwt.sign({ id: user._id, name: user.name }, process.env.JWT_SECRET);
-      res.json({ token : token , message : "You logged in successfully!"});
+      res.json({ token : token , message : "You logged in successfully!" , id : user._id});
      
       // res.send("You logged in successfully!"
     }

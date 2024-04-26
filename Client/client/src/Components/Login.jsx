@@ -40,6 +40,7 @@ function Login() {
         if (res.data.token) {
           localStorage.setItem("token", res.data.token); 
           localStorage.setItem("user", loginData.name);
+          localStorage.setItem("id", res.data.id);
           
           console.log(res.data)
           alert(res.data.message); 
