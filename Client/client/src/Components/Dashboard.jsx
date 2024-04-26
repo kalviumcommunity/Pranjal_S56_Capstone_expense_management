@@ -1,5 +1,5 @@
-import React, { useState } from "react";
-import { Form, Input, Modal, Select, message } from "antd";
+import React, { useState, useEffect } from "react";
+import { Form, Input, Modal, Select, Table, message } from "antd";
 import axios from "axios";
 import "../Styles/Dashboard.css";
 import Layout from "./Layout";
@@ -8,49 +8,104 @@ import FormItem from "antd/es/form/FormItem";
 function Dashboard() {
   const [showModal, setShowModal] = useState(false);
   const [loading, setLoading] = useState(false);
+  const [transactions, setTransactions] = useState([]);
+  const [Frequency,setFrequency] = useState('7')
 
-  // form handling
+  
+  // table data
+  const columns = [
+    {
+      title: 'Date',
+      dataIndex: 'date'
+    },
+    {
+      title: 'Amount',
+      dataIndex: 'amount'
+    },
+    {
+      title: 'Type',
+      dataIndex: 'type'
+    },
+    {
+      title: 'Category',
+      dataIndex: 'category'
+    },
+    {
+      title: 'Reference',
+      dataIndex: 'reference'
+    },
+    {
+      title: 'Actions',
+      // Add action buttons here if needed
+    }
+  ];
+  
+  useEffect(() => {
+   try{
+   axios.get(`http://localhost:3000/getTransaction/${localStorage.getItem("id")}`)
+    .then((res) =>{
+      console.log(res.data)
+      setTransactions(res.data)
+    })
+   }
+   catch(err){
+    console.error(err)
+   }
+  }, []);
+
+ 
+
   const handleSubmit = async (values) => {
     try {
-      const user = localStorage.getItem("user");
-      console.log(user);
+      const user = localStorage.getItem("id");
+      setLoading(true);
 
       // Save to MongoDB
-      setLoading(true);
-      await axios
-        .post("http://localhost:3000/add-transaction", {
-          data: values,
-          email: user,
-        })
-        .then((res) => {
-          setLoading(false);
+      await axios.post("http://localhost:3000/addTransaction", {
+        data: values,
+        email: user,
+      })
+      .then((res)=>{
+        console.log(res)
+        
+        setLoading(false);
+        
+      // Update state with new transaction
+      const newTransaction = { ...values, userid: user._id };
+      setTransactions([...transactions, newTransaction]);
 
-          // Save to localStorage
-          try {
-            let transactions =
-              JSON.parse(localStorage.getItem("transactions")) || [];
-            const newTransaction = { ...values, userid: user._id };
-            transactions = [...transactions, newTransaction];
-            localStorage.setItem("transactions", JSON.stringify(transactions));
-          } catch (parseError) {
-            console.error("Error parsing JSON:", parseError);
-            // Handle parse error, e.g., clear localStorage or show a message to the user
-          }
-
-          message.success("Transaction Added successfully");
-          setShowModal(false);
-        });
+      
+      // Save to localStorage
+      localStorage.setItem("transactions", JSON.stringify([...transactions, newTransaction]));
+      
+      message.success("Transaction Added successfully");
+      setShowModal(false);
+    })
+    .catch((err)=>{
+      console.log(err , "Error mil gaya")
+    })
     } catch (error) {
       setLoading(false);
       message.error("Failed to add the transaction");
-      console.log(error);
+      console.error(error);
     }
   };
+  useEffect(()=>{
+    handleSubmit()
+  },[Frequency])
 
   return (
     <Layout>
       <div className="filters">
-        <div>range filters</div>
+        <div>
+          <h6>Select Frequency</h6>
+          <Select value={Frequency} onChange={(value)=>setFrequency(value)}>
+            <Select.Option value="7">Last 1 Week</Select.Option>
+            <Select.Option value='30'>Last 1 Month</Select.Option>
+            <Select.Option value="365">Last 1 Year</Select.Option>
+            <Select.Option value='custom'>Custom</Select.Option>
+          </Select>
+        </div>
 
         <div>
           <button className="addnewtrans" onClick={() => setShowModal(true)}>
@@ -59,7 +114,9 @@ function Dashboard() {
         </div>
       </div>
 
-      <div className="content"></div>
+      <div className="content">
+        <Table columns={columns} dataSource={transactions} />
+      </div>
 
       <Modal
         title="Add Transaction"

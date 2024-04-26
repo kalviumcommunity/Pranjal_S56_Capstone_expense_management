@@ -1,11 +1,15 @@
 const TransactionModel = require("../models/Transaction");
 const { userModel } = require("../models/model");
+const moment = require("moment");
 
 const GetAllTransaction = async (req, res) => {
+  const id = req.params.id
+  console.log(typeof(id))
   try {
     const transaction = await TransactionModel.find({
-      userid: req.query.userid,
+      userid: id,
     });
+
     res.status(200).json(transaction);
   } catch (error) {
     console.log(error);
@@ -16,10 +20,9 @@ const GetAllTransaction = async (req, res) => {
 const AddTransaction = async (req, res) => {
   console.log(req.body);
   try {
-    let user = await userModel.findOne({ name: req.body.email });
+    let user = await userModel.findOne({ _id: req.body.email });
     console.log(user);
     if (user) {
-      // Check if user is not null before accessing user._id
       if (user._id) {
         await TransactionModel.create({ ...req.body.data, userid: user._id });
         res.status(201).send("New Transaction created");
@@ -29,7 +32,7 @@ const AddTransaction = async (req, res) => {
       }
     } else {
       console.log("User not found");
-      res.status(404).send("User not found");
+      res.status(400).send("User not found");
     }
   } catch (error) {
     console.log(error);
