@@ -4,7 +4,7 @@ const moment = require("moment");
 
 const GetAllTransaction = async (req, res) => {
   const id = req.params.id
-  console.log(typeof(id))
+  
   try {
     const transaction = await TransactionModel.find({
       userid: id,
