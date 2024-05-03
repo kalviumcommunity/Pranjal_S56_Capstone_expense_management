@@ -4,9 +4,14 @@ const moment = require("moment");
 
 const GetAllTransaction = async (req, res) => {
   const id = req.params.id
-  
+  console.log(id)
   try {
+    const {frequency} = req.body
     const transaction = await TransactionModel.find({
+      
+      // date:{
+      //   $gt:moment().subtract(Number(frequency),'d').toDate(),
+      // },
       userid: id,
     });
 
@@ -20,7 +25,7 @@ const GetAllTransaction = async (req, res) => {
 const AddTransaction = async (req, res) => {
   console.log(req.body);
   try {
-    let user = await userModel.findOne({ _id: req.body.email });
+    let user = await userModel.findOne({ _id: req.body.id });
     console.log(user);
     if (user) {
       if (user._id) {

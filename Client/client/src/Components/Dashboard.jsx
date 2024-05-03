@@ -4,56 +4,211 @@ import axios from "axios";
 import "../Styles/Dashboard.css";
 import Layout from "./Layout";
 import FormItem from "antd/es/form/FormItem";
+import moment from "moment";
+import { DatePicker } from "antd";
+const { MonthPicker, RangePicker } = DatePicker;
 
 function Dashboard() {
   const [showModal, setShowModal] = useState(false);
   const [loading, setLoading] = useState(false);
   const [transactions, setTransactions] = useState([]);
-  const [Frequency,setFrequency] = useState('7')
+  const [frequency, setFrequency] = useState("all");
+  const [selectedDate, setSelectedDate] = useState([]);
+  const [type, SetType] = useState("all");
+  const [editableRow, setEditableRow] = useState([]);
 
-  
+  const handleEdit = (record) => {
+    setEditableRow(record.key);
+  };
+
+  const handleSave = async (record) => {
+    console.log(record);
+    try {
+      const updatedTransaction = { ...record };
+      setLoading(true);
+
+      // Make PUT request to update transaction
+      await axios
+        .put(
+          `http://localhost:3000/updateTransaction/${record._id}`,
+          updatedTransaction
+        )
+        .then((res) => {
+          console.log(res);
+          setLoading(false);
+          message.success("Transaction updated successfully");
+          setEditableRow(null);
+          handleNewData();
+        });
+    } catch (error) {
+      setLoading(false);
+      // message.error("Failed to update the transaction");
+      console.error(error, "Failed to update the transaction");
+    }
+  };
   // table data
   const columns = [
     {
-      title: 'Date',
-      dataIndex: 'date'
+      title: "Date",
+      dataIndex: "date",
+      render: (text, record) =>
+        editableRow === record.key ? (
+          <DatePicker
+            defaultValue={moment(text)}
+            onChange={(value) => (record.date = value)}
+          />
+        ) : (
+          <span>{moment(text).format("YYYY-MM-DD")}</span>
+        ),
     },
     {
-      title: 'Amount',
-      dataIndex: 'amount'
+      title: "Amount",
+      dataIndex: "amount",
+      render: (text, record) =>
+        editableRow === record.key ? (
+          <Input
+            defaultValue={text}
+            onChange={(e) => (record.amount = e.target.value)}
+          />
+        ) : (
+          <span>{text}</span>
+        ),
     },
     {
-      title: 'Type',
-      dataIndex: 'type'
+      title: "Type",
+      dataIndex: "type",
+      render: (text, record) =>
+        editableRow === record.key ? (
+          <Select
+            defaultValue={text}
+            onChange={(value) => (record.type = value)}
+          >
+            <Select.Option value="income">Income</Select.Option>
+            <Select.Option value="expense">Expense</Select.Option>
+          </Select>
+        ) : (
+          <span>{text}</span>
+        ),
     },
     {
-      title: 'Category',
-      dataIndex: 'category'
+      title: "Category",
+      dataIndex: "category",
+      render: (text, record) =>
+        editableRow === record.key ? (
+          <Input
+            defaultValue={text}
+            onChange={(e) => (record.category = e.target.value)}
+          />
+        ) : (
+          <span>{text}</span>
+        ),
     },
     {
-      title: 'Reference',
-      dataIndex: 'reference'
+      title: "Reference",
+      dataIndex: "reference",
+      render: (text, record) =>
+        editableRow === record.key ? (
+          <Input
+            defaultValue={text}
+            onChange={(e) => (record.reference = e.target.value)}
+          />
+        ) : (
+          <span>{text}</span>
+        ),
     },
     {
-      title: 'Actions',
-      // Add action buttons here if needed
-    }
+      title: "Actions",
+      dataIndex: "actions",
+      render: (_, record) =>
+        editableRow === record.key ? (
+          <button onClick={() => handleSave(record)}>Save</button>
+        ) : (
+          <button
+            onClick={() => {
+              console.log(record);
+              handleEdit(record);
+            }}
+          >
+            Edit
+          </button>
+        ),
+    },
   ];
-  
+
+  const handleNewData = async () => {
+    try {
+      const user = localStorage.getItem("id");
+      const res = await axios.get(
+        `http://localhost:3000/getTransaction/${user}`
+      );
+      setTransactions(res.data);
+    } catch (err) {
+      console.error(err);
+    }
+  };
+
   useEffect(() => {
-   try{
-   axios.get(`http://localhost:3000/getTransaction/${localStorage.getItem("id")}`)
-    .then((res) =>{
-      console.log(res.data)
-      setTransactions(res.data)
-    })
-   }
-   catch(err){
-    console.error(err)
-   }
+    handleNewData();
   }, []);
 
- 
+  const oneWeekAgo = new Date();
+  oneWeekAgo.setDate(oneWeekAgo.getDate() - 7);
+
+  let filteredData = [];
+
+  if (frequency === "all") {
+    filteredData = transactions;
+  } else if (frequency === "7") {
+    filteredData = transactions.filter((transaction) => {
+      const transactionDate = new Date(transaction.date);
+      const daysDifference = Math.ceil(
+        (new Date() - transactionDate) / (1000 * 60 * 60 * 24)
+      );
+      return daysDifference <= 7;
+    });
+  } else if (frequency === "30") {
+    filteredData = transactions.filter((transaction) => {
+      const transactionDate = new Date(transaction.date);
+      const today = new Date();
+      const monthDifference =
+        today.getMonth() +
+        1 -
+        transactionDate.getMonth() +
+        12 * (today.getFullYear() - transactionDate.getFullYear());
+      return monthDifference <= 1;
+    });
+  } else if (frequency === "365") {
+    filteredData = transactions.filter((transaction) => {
+      const transactionDate = new Date(transaction.date);
+      const today = new Date();
+      const yearDifference =
+        today.getFullYear() - transactionDate.getFullYear();
+      return yearDifference <= 1;
+    });
+  }
+
+  useEffect(() => {
+    if (frequency === "custom" && selectedDate.length === 2) {
+      const startDate = selectedDate[0];
+      const endDate = selectedDate[1];
+
+      filteredData = transactions.filter((transaction) => {
+        const transactionDate = moment(transaction.date);
+        return transactionDate.isBetween(startDate, endDate, null, "[]");
+      });
+    } else {
+      // Apply other frequency-based filtering logic here...
+      if (frequency === "all") {
+        filteredData = transactions;
+      } else if (frequency === "7") {
+        // Filtering for last 7 days
+      } else if (frequency === "30") {
+        // Filtering for last 30 days
+      } else if (frequency === "365") {
+        // Filtering for last 365 days
+      }
+    }
+  }, [frequency, selectedDate]);
 
   const handleSubmit = async (values) => {
     try {
@@ -61,50 +216,55 @@ function Dashboard() {
       setLoading(true);
 
       // Save to MongoDB
-      await axios.post("http://localhost:3000/addTransaction", {
-        data: values,
-        email: user,
-      })
-      .then((res)=>{
-        console.log(res)
-        
-        setLoading(false);
-        
-      // Update state with new transaction
-      const newTransaction = { ...values, userid: user._id };
-      setTransactions([...transactions, newTransaction]);
+      await axios
+        .post("http://localhost:3000/addTransaction", {
+          data: values,
+          id: user,
+        })
+        .then((res) => {
+          console.log(res);
 
-      
-      // Save to localStorage
-      localStorage.setItem("transactions", JSON.stringify([...transactions, newTransaction]));
-      
-      message.success("Transaction Added successfully");
-      setShowModal(false);
-    })
-    .catch((err)=>{
-      console.log(err , "Error mil gaya")
-    })
+          setLoading(false);
+
+          // Update state with new transaction
+          const newTransaction = { ...values, userid: user._id };
+          setTransactions([...transactions, newTransaction]);
+
+          // Save to localStorage
+          localStorage.setItem(
+            "transactions",
+            JSON.stringify([...transactions, newTransaction])
+          );
+
+          message.success("Transaction Added successfully");
+          setShowModal(false);
+        })
+        .catch((err) => {
+          console.log(err, "Found the error");
+        });
     } catch (error) {
       setLoading(false);
       message.error("Failed to add the transaction");
       console.error(error);
     }
   };
-  useEffect(()=>{
-    handleSubmit()
-  },[Frequency])
+  // useEffect(() => {
+  //   handleSubmit();
+  // }, []);
 
   return (
     <Layout>
       <div className="filters">
         <div>
-          <h6>Select Frequency</h6>
-          <Select value={Frequency} onChange={(value)=>setFrequency(value)}>
+          <h4>Select Frequency</h4>
+          <Select value={frequency} onChange={(value) => setFrequency(value)}>
+            <Select.Option value="all">All Data</Select.Option>
             <Select.Option value="7">Last 1 Week</Select.Option>
-            <Select.Option value='30'>Last 1 Month</Select.Option>
+            <Select.Option value="30">Last 1 Month</Select.Option>
             <Select.Option value="365">Last 1 Year</Select.Option>
-            <Select.Option value='custom'>Custom</Select.Option>
+            <Select.Option value="custom">Custom</Select.Option>
           </Select>
+          {/* {frequency === 'custom' && <RangePicker value={selectedDate} onChange={(values)=>setSelectedDate(values)}/>} */}
         </div>
 
         <div>
@@ -115,7 +275,7 @@ function Dashboard() {
       </div>
 
       <div className="content">
-        <Table columns={columns} dataSource={transactions} />
+        <Table columns={columns} dataSource={filteredData} />
       </div>
 
       <Modal
