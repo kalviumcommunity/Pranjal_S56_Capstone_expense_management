@@ -32,27 +32,20 @@ function Login() {
       password: password,
     };
     axios
-      .post(
-        "http://localhost:3000/login",
-        loginData
-      )
+      .post("http://localhost:3000/login", loginData)
       .then((res) => {
         if (res.data.token) {
-          localStorage.setItem("token", res.data.token); 
+          localStorage.setItem("token", res.data.token);
           localStorage.setItem("user", loginData.name);
           localStorage.setItem("id", res.data.id);
-          
-          console.log(res.data)
-          alert(res.data.message); 
-          
-          navigate("/");
-        } 
-        else{
-          alert("User not found. Please create an account.")
-        }
 
-        
-        
+          console.log(res.data);
+          alert(res.data.message);
+
+          navigate("/");
+        } else {
+          alert("User not found. Please create an account.");
+        }
       })
       .catch((err) => {
         console.error(err);
@@ -100,9 +93,11 @@ function Login() {
         {message && <div className="message">{message}</div>}
 
         <p className="register-link">
-            Don't have an account?{" "}
-            <NavLink to="/signin" className={"navsign"}>Register</NavLink>
-          </p>
+          Don't have an account?{" "}
+          <NavLink to="/signin" className={"navsign"}>
+            Register
+          </NavLink>
+        </p>
       </form>
     </>
   );
