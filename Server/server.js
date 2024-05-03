@@ -31,7 +31,7 @@ app.post("/register", async (req, res) => {
     if (emailVerify) {
       return res.send("User already exists");
     }
-    const saltRounds = 10; // You can adjust the number of salt rounds as per your requirement
+    const saltRounds = 10; 
     const hashPassword = await bcrypt.hash(data.password, saltRounds);
     const newUser = new userModel({
       name: data.name,
@@ -73,7 +73,8 @@ app.post("/login", async (req, res) => {
   }
 });
 app.put("/updateTransaction/:id", async (req, res) => {
-  let { id } = req.params; // Corrected this line
+
+  let { id } = req.params; 
   let body = req.body;
   try {
     await TransactionModel.updateOne({ _id: id }, body);
