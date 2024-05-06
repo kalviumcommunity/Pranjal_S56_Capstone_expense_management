@@ -42,11 +42,41 @@ function Dashboard() {
         });
     } catch (error) {
       setLoading(false);
-      // message.error("Failed to update the transaction");
+
       console.error(error, "Failed to update the transaction");
     }
   };
-  // table data
+
+  const handleDelete = (record) => {
+    Modal.confirm({
+      title: "Confirm Deletion",
+      content: "Are you sure you want to delete this transaction?",
+      okText: "Yes",
+      okType: "danger",
+      cancelText: "No",
+      onOk() {
+        confirmDelete(record);
+      },
+    });
+  };
+
+  const confirmDelete = async (record) => {
+    try {
+      setLoading(true);
+      // Make DELETE request to delete transaction
+      await axios.delete(
+        `http://localhost:3000/deleteTransaction/${record._id}`
+      );
+      setLoading(false);
+      message.success("Transaction deleted successfully");
+      handleNewData();
+    } catch (error) {
+      setLoading(false);
+      console.error(error, "Failed to delete the transaction");
+      message.error("Failed to delete the transaction");
+    }
+  };
+
   const columns = [
     {
       title: "Date",
@@ -119,19 +149,16 @@ function Dashboard() {
     {
       title: "Actions",
       dataIndex: "actions",
-      render: (_, record) =>
-        editableRow === record.key ? (
-          <button onClick={() => handleSave(record)}>Save</button>
-        ) : (
-          <button
-            onClick={() => {
-              console.log(record);
-              handleEdit(record);
-            }}
-          >
-            Edit
-          </button>
-        ),
+      render: (_, record) => (
+        <span>
+          {editableRow === record.key ? (
+            <button onClick={() => handleSave(record)}>Save</button>
+          ) : (
+            <button onClick={() => handleEdit(record)}>Edit</button>
+          )}
+          <button onClick={() => handleDelete(record)}>Delete</button>
+        </span>
+      ),
     },
   ];
 
