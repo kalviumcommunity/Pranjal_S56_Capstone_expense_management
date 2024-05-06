@@ -64,7 +64,6 @@ app.post("/login", async (req, res) => {
         id: user._id,
       });
 
-      // res.send("You logged in successfully!"
     } else {
       res.status(401).send("Incorrect password");
     }
@@ -84,6 +83,22 @@ app.put("/updateTransaction/:id", async (req, res) => {
     console.log(err);
   }
 });
+
+app.delete("/deleteTransaction/:id", async (req, res) => {
+  const { id } = req.params;
+  try {
+    const result = await TransactionModel.deleteOne({ _id: id });
+    if (result.deletedCount === 1) {
+      res.send({ message: "Transaction deleted successfully" });
+    } else {
+      res.status(404).send({ error: "Transaction not found" });
+    }
+  } catch (err) {
+    res.status(500).send({ error: "Internal Server Error" });
+    console.error(err);
+  }
+});
+
 
 app.listen(port, () => {
   connected();
