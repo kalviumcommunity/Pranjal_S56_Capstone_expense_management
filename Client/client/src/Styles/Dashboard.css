@@ -5,3 +5,27 @@
     padding: 15px 20px;
     box-shadow: 0 0 15px black;
 }
+
+.listIcon{
+    width: 25px;
+    height: 25px;
+    cursor: pointer;
+    color: gray;
+}
+
+.chartIcon{
+    width: 25px;
+    height: 25px;
+    cursor: pointer;
+    color: gray;
+}
+
+.chartIcon.active,
+.listIcon.active {
+  color: black; 
+}
+.analytics{
+    width: 80px;
+    display: flex;
+    justify-content: space-between;
+}

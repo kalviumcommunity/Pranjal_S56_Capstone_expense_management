@@ -6,6 +6,7 @@ import Friends from "./Components/Friends";
 import Logout from "./Components/Logout";
 import Login from "./Components/Login";
 import Aboutus from "./Components/Aboutus";
+import Analytics from "./Components/Analytics";
 
 function App() {
   return (
@@ -19,6 +20,7 @@ function App() {
           <Route path="/logout" element={<Logout/>}></Route>
           <Route path="/login" element={<Login/>}></Route>
           <Route path="/aboutus" element={<Aboutus/>}></Route>
+          <Route path="/analytics" element={<Analytics/>}></Route>
 
 
         </Routes>

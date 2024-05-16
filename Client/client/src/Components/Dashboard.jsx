@@ -7,6 +7,9 @@ import FormItem from "antd/es/form/FormItem";
 import moment from "moment";
 import { DatePicker } from "antd";
 const { MonthPicker, RangePicker } = DatePicker;
+import { AiOutlineUnorderedList } from "react-icons/ai";
+import { FaChartArea } from "react-icons/fa";
+import Analytics from "./Analytics";
 
 function Dashboard() {
   const [showModal, setShowModal] = useState(false);
@@ -14,8 +17,10 @@ function Dashboard() {
   const [transactions, setTransactions] = useState([]);
   const [frequency, setFrequency] = useState("all");
   const [selectedDate, setSelectedDate] = useState([]);
-  const [type, SetType] = useState("all");
-  const [editableRow, setEditableRow] = useState([]);
+  const [type, setType] = useState("all");
+  const [editableRow, setEditableRow] = useState(null);
+  const [activeList, setActiveList] = useState(true);
+  const [activeComponent, setActiveComponent] = useState("table");
 
   const handleEdit = (record) => {
     setEditableRow(record.key);
@@ -28,21 +33,16 @@ function Dashboard() {
       setLoading(true);
 
       // Make PUT request to update transaction
-      await axios
-        .put(
-          `http://localhost:3000/updateTransaction/${record._id}`,
-          updatedTransaction
-        )
-        .then((res) => {
-          console.log(res);
-          setLoading(false);
-          message.success("Transaction updated successfully");
-          setEditableRow(null);
-          handleNewData();
-        });
+      await axios.put(
+        `http://localhost:3000/updateTransaction/${record._id}`,
+        updatedTransaction
+      );
+      setLoading(false);
+      message.success("Transaction updated successfully");
+      setEditableRow(null);
+      handleNewData();
     } catch (error) {
       setLoading(false);
-
       console.error(error, "Failed to update the transaction");
     }
   };
@@ -178,64 +178,30 @@ function Dashboard() {
     handleNewData();
   }, []);
 
-  const oneWeekAgo = new Date();
-  oneWeekAgo.setDate(oneWeekAgo.getDate() - 7);
+  let filteredData = [...transactions];
 
-  let filteredData = [];
-
-  if (frequency === "all") {
-    filteredData = transactions;
-  } else if (frequency === "7") {
-    filteredData = transactions.filter((transaction) => {
-      const transactionDate = new Date(transaction.date);
-      const daysDifference = Math.ceil(
-        (new Date() - transactionDate) / (1000 * 60 * 60 * 24)
-      );
-      return daysDifference <= 7;
-    });
-  } else if (frequency === "30") {
-    filteredData = transactions.filter((transaction) => {
-      const transactionDate = new Date(transaction.date);
-      const today = new Date();
-      const monthDifference =
-        today.getMonth() +
-        1 -
-        transactionDate.getMonth() +
-        12 * (today.getFullYear() - transactionDate.getFullYear());
-      return monthDifference <= 1;
-    });
-  } else if (frequency === "365") {
-    filteredData = transactions.filter((transaction) => {
-      const transactionDate = new Date(transaction.date);
-      const today = new Date();
-      const yearDifference =
-        today.getFullYear() - transactionDate.getFullYear();
-      return yearDifference <= 1;
-    });
+  if (type !== "all") {
+    filteredData = filteredData.filter((transaction) => transaction.type === type);
   }
 
-  useEffect(() => {
-    if (frequency === "custom" && selectedDate.length === 2) {
-      const startDate = selectedDate[0];
-      const endDate = selectedDate[1];
+  if (frequency === "custom" && selectedDate.length === 2) {
+    const startDate = selectedDate[0];
+    const endDate = selectedDate[1];
 
-      filteredData = transactions.filter((transaction) => {
-        const transactionDate = moment(transaction.date);
-        return transactionDate.isBetween(startDate, endDate, null, "[]");
-      });
-    } else {
-      // Apply other frequency-based filtering logic here...
-      if (frequency === "all") {
-        filteredData = transactions;
-      } else if (frequency === "7") {
-        // Filtering for last 7 days
-      } else if (frequency === "30") {
-        // Filtering for last 30 days
-      } else if (frequency === "365") {
-        // Filtering for last 365 days
-      }
-    }
-  }, [frequency, selectedDate]);
+    filteredData = transactions.filter((transaction) => {
+      const transactionDate = moment(transaction.date);
+      return transactionDate.isBetween(startDate, endDate, null, "[]");
+    });
+  } else if (frequency === "7") {
+    const oneWeekAgo = moment().subtract(7, 'days').toDate();
+    filteredData = transactions.filter((transaction) => moment(transaction.date).isAfter(oneWeekAgo));
+  } else if (frequency === "30") {
+    const oneMonthAgo = moment().subtract(1, 'months').toDate();
+    filteredData = transactions.filter((transaction) => moment(transaction.date).isAfter(oneMonthAgo));
+  } else if (frequency === "365") {
+    const oneYearAgo = moment().subtract(1, 'years').toDate();
+    filteredData = transactions.filter((transaction) => moment(transaction.date).isAfter(oneYearAgo));
+  }
 
   const handleSubmit = async (values) => {
     try {
@@ -243,41 +209,30 @@ function Dashboard() {
       setLoading(true);
 
       // Save to MongoDB
-      await axios
-        .post("http://localhost:3000/addTransaction", {
-          data: values,
-          id: user,
-        })
-        .then((res) => {
-          console.log(res);
+      await axios.post("http://localhost:3000/addTransaction", {
+        data: values,
+        id: user
+      });
+      setLoading(false);
 
-          setLoading(false);
+      // Update state with new transaction
+      const newTransaction = { ...values, userid: user._id };
+      setTransactions([...transactions, newTransaction]);
 
-          // Update state with new transaction
-          const newTransaction = { ...values, userid: user._id };
-          setTransactions([...transactions, newTransaction]);
+      // Save to localStorage
+      localStorage.setItem(
+        "transactions",
+        JSON.stringify([...transactions, newTransaction])
+      );
 
-          // Save to localStorage
-          localStorage.setItem(
-            "transactions",
-            JSON.stringify([...transactions, newTransaction])
-          );
-
-          message.success("Transaction Added successfully");
-          setShowModal(false);
-        })
-        .catch((err) => {
-          console.log(err, "Found the error");
-        });
+      message.success("Transaction Added successfully");
+      setShowModal(false);
     } catch (error) {
       setLoading(false);
       message.error("Failed to add the transaction");
       console.error(error);
     }
   };
-  // useEffect(() => {
-  //   handleSubmit();
-  // }, []);
 
   return (
     <Layout>
@@ -291,7 +246,26 @@ function Dashboard() {
             <Select.Option value="365">Last 1 Year</Select.Option>
             <Select.Option value="custom">Custom</Select.Option>
           </Select>
-          {/* {frequency === 'custom' && <RangePicker value={selectedDate} onChange={(values)=>setSelectedDate(values)}/>} */}
+        </div>
+
+        <div>
+          <h4>Select Type</h4>
+          <Select value={type} onChange={(value) => setType(value)}>
+            <Select.Option value="all">All Types</Select.Option>
+            <Select.Option value="income">Income</Select.Option>
+            <Select.Option value="expense">Expense</Select.Option>
+          </Select>
+        </div>
+        
+        <div className="analytics">
+          <AiOutlineUnorderedList
+            className={`listIcon ${activeComponent === 'table' ? 'active' : ''}`}
+            onClick={() => setActiveComponent('table')}
+          />
+          <FaChartArea
+            className={`chartIcon ${activeComponent === 'analytics' ? 'active' : ''}`}
+            onClick={() => setActiveComponent('analytics')}
+          />
         </div>
 
         <div>
@@ -302,7 +276,11 @@ function Dashboard() {
       </div>
 
       <div className="content">
-        <Table columns={columns} dataSource={filteredData} />
+        {activeComponent === 'table' ? (
+          <Table columns={columns} dataSource={filteredData} />
+        ) : (
+          <Analytics transactions = {transactions} />
+        )}
       </div>
 
       <Modal
@@ -315,13 +293,13 @@ function Dashboard() {
           <Form.Item label="Amount" name="amount">
             <Input type="text" />
           </Form.Item>
-          <FormItem label="Type" name="type">
+          <Form.Item label="Type" name="type">
             <Select>
               <Select.Option value="income">Income</Select.Option>
               <Select.Option value="expense">Expense</Select.Option>
             </Select>
-          </FormItem>
-          <FormItem label="Category" name="category">
+          </Form.Item>
+          <Form.Item label="Category" name="category">
             <Select>
               <Select.Option value="salary">Salary</Select.Option>
               <Select.Option value="tip">Tip</Select.Option>
@@ -333,17 +311,17 @@ function Dashboard() {
               <Select.Option value="fee">Fee</Select.Option>
               <Select.Option value="tax">TAX</Select.Option>
             </Select>
-          </FormItem>
+          </Form.Item>
 
-          <FormItem label="Date" name="date">
+          <Form.Item label="Date" name="date">
             <Input type="date" />
-          </FormItem>
-          <FormItem label="Reference" name="reference">
+          </Form.Item>
+          <Form.Item label="Reference" name="reference">
             <Input type="text" />
-          </FormItem>
-          <FormItem label="Description" name="description">
+          </Form.Item>
+          <Form.Item label="Description" name="description">
             <Input type="text" />
-          </FormItem>
+          </Form.Item>
 
           <div className="d-flex">
             <button type="submit" className="save">

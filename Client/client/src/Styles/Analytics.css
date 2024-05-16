@@ -1,0 +1,12 @@
+.tracker{
+    display: flex;
+    width: 300px;
+    justify-content: space-between;
+   
+}
+
+.row{
+    margin-top: 50px;
+    width: 300px;
+    
+}
