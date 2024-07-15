@@ -48,7 +48,7 @@ app.post("/register", async (req, res) => {
 app.post("/login", async (req, res) => {
   const { name, password } = req.body;
   try {
-    const user = await userModel.findOne({ name });
+    const user = await userModel.findOne({ name }); 
     if (!user) {
       return res.send("User not found. Please create an account.");
     }
