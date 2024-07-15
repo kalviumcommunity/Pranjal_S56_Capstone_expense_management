@@ -12,9 +12,9 @@ const Footer = () => {
                         <p className='text'>iFinance leads the industry in providing comprehensive expense management solutions for businesses. Our intuitive platform simplifies expense tracking, enhances financial visibility, and drives efficiency. With customizable reporting and seamless integration capabilities, we empower businesses to make informed decisions and optimize resources effectively. Join us and experience the difference in managing expenses efficiently and effectively.</p>
                         <div className="icons">
                             <SocialIcon network="twitter" target="_blank" url="https://twitter.com/Pranjal_G25" aria-label="Twitter" />
-                            <SocialIcon network="instagram" target="_blank" url="https://www.instagram.com/pranjalgosavi_25/" aria-label="Instagram" />
+                            <SocialIcon network="instagram" target="_blank" url="https://www.instagram.com/" aria-label="Instagram" />
                             <SocialIcon network="linkedin" target="_blank" url="https://www.linkedin.com/in/pranjal-gosavi-21b182292/" aria-label="LinkedIn" />
-                            <SocialIcon network="facebook" target="_blank" url="https://www.facebook.com/social" aria-label="Facebook" />
+                            <SocialIcon network="facebook" target="_blank" url="https://www.facebook.com/" aria-label="Facebook" />
                         </div>
 
                         <p>© 2024 iFinance. All rights reserved.</p>

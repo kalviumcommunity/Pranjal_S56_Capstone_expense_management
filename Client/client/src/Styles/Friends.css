@@ -1,0 +1,141 @@
+/* Friends.css */
+
+#center_column {
+    width: 96%;
+    padding: 20px;
+    background-color: #f9f9f9;
+    align-items: center;
+  }
+  
+  .topbar {
+    display: flex;
+    align-items: center;
+    padding: 20px;
+    background-color: #fff;
+    border-bottom: 1px solid #ddd;
+    margin-bottom: 20px;
+  }
+  
+  .topbar img {
+    width: 50px;
+    height: 50px;
+    margin-right: 20px;
+  }
+  
+  .topbar h1 {
+    flex-grow: 1;
+    font-size: 24px;
+    margin: 0;
+  }
+  
+  .actions {
+    display: flex;
+    gap: 10px;
+  }
+  
+  .btn {
+    padding: 10px 20px;
+    font-size: 16px;
+    border: none;
+    cursor: pointer;
+    text-align: center;
+    text-decoration: none;
+  }
+  
+  .btn-orange {
+    background-color: #ff9800;
+    color: #fff;
+  }
+  
+  .btn-mint {
+    background-color: #00c853;
+    color: #fff;
+  }
+  
+  #expenses {
+    background-color: #fff;
+    padding: 20px;
+    border-radius: 5px;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+  }
+  
+  .month-divider {
+    padding: 10px 0;
+    border-bottom: 1px solid #ddd;
+    margin-bottom: 10px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+  
+  .month-divider span {
+    font-size: 18px;
+    font-weight: bold;
+  }
+  
+  .expense {
+    padding: 15px 0;
+    border-bottom: 1px solid #eee;
+    display: flex;
+    align-items: center;
+  }
+  
+  .expense:last-child {
+    border-bottom: none;
+  }
+  
+  .date {
+    width: 60px;
+    text-align: center;
+    margin-right: 20px;
+  }
+  
+  .date .number {
+    font-size: 24px;
+    font-weight: bold;
+  }
+  
+  .receipt {
+    width: 50px;
+    height: 50px;
+    margin-right: 20px;
+  }
+  
+  .header {
+    flex-grow: 1;
+  }
+  
+  .header .description a {
+    font-size: 16px;
+    color: #333;
+    text-decoration: none;
+  }
+  
+  .cost,
+  .you {
+    text-align: right;
+    margin-right: 20px;
+  }
+  
+  .cost .number,
+  .you .positive {
+    font-size: 18px;
+    font-weight: bold;
+  }
+  
+  .actions .delete {
+    color: #f44336;
+    text-decoration: none;
+    font-size: 24px;
+  }
+  
+  #load_more_expenses {
+    margin-top: 20px;
+  }
+  
+  #load_more_expenses_button {
+    padding: 10px 20px;
+    font-size: 16px;
+    cursor: pointer;
+  }
+  

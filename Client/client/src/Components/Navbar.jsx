@@ -3,7 +3,7 @@ import logo from "../images/Logo.png";
 import { NavLink } from "react-router-dom"; 
 import "../Styles/Navbar.css";
 
-function Navbar() {
+function Navbar({profilePhotoUrl}) {
   
   return (
     <div className="main">
@@ -16,6 +16,7 @@ function Navbar() {
           <NavLink className="nav" to={"/friends"}><p className="tag">Friends</p></NavLink>
           <NavLink className="nav" to={"/aboutus"}><p className="tag">About us</p></NavLink>
           <NavLink className="nav" to={"/login"}><p className="tag">Login</p></NavLink>
+          {/* {profilePhotoUrl && <img className="profile-photo" src={profilePhotoUrl} alt="Profile" />} */}
           <button className="logout">Logout</button>
         </div>
       </div>

@@ -5,7 +5,13 @@
     padding: 15px 20px;
     box-shadow: 0 0 15px black;
 }
+#desBox{
+    width: 20px;
+}
 
+.ant-table-cell{
+width: 200px;
+}
 .listIcon{
     width: 25px;
     height: 25px;

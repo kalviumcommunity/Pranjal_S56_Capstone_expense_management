@@ -3,7 +3,6 @@ import { Form, Input, Modal, Select, Table, message } from "antd";
 import axios from "axios";
 import "../Styles/Dashboard.css";
 import Layout from "./Layout";
-import FormItem from "antd/es/form/FormItem";
 import moment from "moment";
 import { DatePicker } from "antd";
 const { MonthPicker, RangePicker } = DatePicker;
@@ -147,10 +146,26 @@ function Dashboard() {
         ),
     },
     {
+      title: "Description",
+      dataIndex: "description",
+      render: (text, record) =>
+        editableRow === record.key ? (
+          <Input
+            
+            defaultValue={text}
+            onChange={(e) => (record.description = e.target.value)}
+         
+          />
+        ) : (
+          <span style={{ display: 'block', width: '200px' }}>{text}</span> 
+        ),
+    },    
+    {
       title: "Actions",
       dataIndex: "actions",
       render: (_, record) => (
-        <span>
+        <span style={{display:'flex', justifyContent:'space-between', width:'110px'}}>
+          
           {editableRow === record.key ? (
             <button onClick={() => handleSave(record)}>Save</button>
           ) : (
