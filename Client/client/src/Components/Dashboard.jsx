@@ -8,6 +8,9 @@ import { DatePicker } from "antd";
 const { MonthPicker, RangePicker } = DatePicker;
 import { AiOutlineUnorderedList } from "react-icons/ai";
 import { FaChartArea } from "react-icons/fa";
+import { MdDelete } from "react-icons/md";
+import { MdModeEditOutline } from "react-icons/md";
+import { BiSolidSave } from "react-icons/bi";
 import Analytics from "./Analytics";
 
 function Dashboard() {
@@ -167,11 +170,11 @@ function Dashboard() {
         <span style={{display:'flex', justifyContent:'space-between', width:'110px'}}>
           
           {editableRow === record.key ? (
-            <button onClick={() => handleSave(record)}>Save</button>
+            <button onClick={() => handleSave(record)}><BiSolidSave /></button>
           ) : (
-            <button onClick={() => handleEdit(record)}>Edit</button>
+            <button onClick={() => handleEdit(record)}><MdModeEditOutline /></button>
           )}
-          <button onClick={() => handleDelete(record)}>Delete</button>
+          <button onClick={() => handleDelete(record)}><MdDelete /></button>
         </span>
       ),
     },
