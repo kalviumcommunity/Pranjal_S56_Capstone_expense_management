@@ -7,6 +7,10 @@ import Logout from "./Components/Logout";
 import Login from "./Components/Login";
 import Aboutus from "./Components/Aboutus";
 import Analytics from "./Components/Analytics";
+import Display from "./Components/Display";
+import Expense from "./Components/Expense";
+import frndsNavbar from "./Components/FrndsNavbar";
+
 
 function App() {
   return (
@@ -21,6 +25,8 @@ function App() {
           <Route path="/login" element={<Login/>}></Route>
           <Route path="/aboutus" element={<Aboutus/>}></Route>
           <Route path="/analytics" element={<Analytics/>}></Route>
+          <Route path="friends/expense" element={<Expense/>}></Route>
+          <Route path="friends/expense/displaytransaction" element={<Display/>}></Route>
 
 
         </Routes>
