@@ -154,27 +154,36 @@ function Dashboard() {
       render: (text, record) =>
         editableRow === record.key ? (
           <Input
-            
             defaultValue={text}
             onChange={(e) => (record.description = e.target.value)}
-         
           />
         ) : (
-          <span style={{ display: 'block', width: '200px' }}>{text}</span> 
+          <span style={{ display: "block", width: "200px" }}>{text}</span>
         ),
-    },    
+    },
     {
       title: "Actions",
       dataIndex: "actions",
       render: (_, record) => (
-        <span style={{display:'flex', justifyContent:'space-between', width:'110px'}}>
-          
+        <span
+          style={{
+            display: "flex",
+            justifyContent: "space-between",
+            width: "110px",
+          }}
+        >
           {editableRow === record.key ? (
-            <button onClick={() => handleSave(record)}><BiSolidSave /></button>
+            <button onClick={() => handleSave(record)}>
+              <BiSolidSave />
+            </button>
           ) : (
-            <button onClick={() => handleEdit(record)}><MdModeEditOutline /></button>
+            <button onClick={() => handleEdit(record)}>
+              <MdModeEditOutline />
+            </button>
           )}
-          <button onClick={() => handleDelete(record)}><MdDelete /></button>
+          <button onClick={() => handleDelete(record)}>
+            <MdDelete />
+          </button>
         </span>
       ),
     },
@@ -199,7 +208,9 @@ function Dashboard() {
   let filteredData = [...transactions];
 
   if (type !== "all") {
-    filteredData = filteredData.filter((transaction) => transaction.type === type);
+    filteredData = filteredData.filter(
+      (transaction) => transaction.type === type
+    );
   }
 
   if (frequency === "custom" && selectedDate.length === 2) {
@@ -211,14 +222,20 @@ function Dashboard() {
       return transactionDate.isBetween(startDate, endDate, null, "[]");
     });
   } else if (frequency === "7") {
-    const oneWeekAgo = moment().subtract(7, 'days').toDate();
-    filteredData = transactions.filter((transaction) => moment(transaction.date).isAfter(oneWeekAgo));
+    const oneWeekAgo = moment().subtract(7, "days").toDate();
+    filteredData = transactions.filter((transaction) =>
+      moment(transaction.date).isAfter(oneWeekAgo)
+    );
   } else if (frequency === "30") {
-    const oneMonthAgo = moment().subtract(1, 'months').toDate();
-    filteredData = transactions.filter((transaction) => moment(transaction.date).isAfter(oneMonthAgo));
+    const oneMonthAgo = moment().subtract(1, "months").toDate();
+    filteredData = transactions.filter((transaction) =>
+      moment(transaction.date).isAfter(oneMonthAgo)
+    );
   } else if (frequency === "365") {
-    const oneYearAgo = moment().subtract(1, 'years').toDate();
-    filteredData = transactions.filter((transaction) => moment(transaction.date).isAfter(oneYearAgo));
+    const oneYearAgo = moment().subtract(1, "years").toDate();
+    filteredData = transactions.filter((transaction) =>
+      moment(transaction.date).isAfter(oneYearAgo)
+    );
   }
 
   const handleSubmit = async (values) => {
@@ -229,7 +246,7 @@ function Dashboard() {
       // Save to MongoDB
       await axios.post("http://localhost:3000/addTransaction", {
         data: values,
-        id: user
+        id: user,
       });
       setLoading(false);
 
@@ -274,30 +291,34 @@ function Dashboard() {
             <Select.Option value="expense">Expense</Select.Option>
           </Select>
         </div>
-        
+
         <div className="analytics">
           <AiOutlineUnorderedList
-            className={`listIcon ${activeComponent === 'table' ? 'active' : ''}`}
-            onClick={() => setActiveComponent('table')}
+            className={`listIcon ${
+              activeComponent === "table" ? "active" : ""
+            }`}
+            onClick={() => setActiveComponent("table")}
           />
           <FaChartArea
-            className={`chartIcon ${activeComponent === 'analytics' ? 'active' : ''}`}
-            onClick={() => setActiveComponent('analytics')}
+            className={`chartIcon ${
+              activeComponent === "analytics" ? "active" : ""
+            }`}
+            onClick={() => setActiveComponent("analytics")}
           />
         </div>
 
         <div>
           <button className="addnewtrans" onClick={() => setShowModal(true)}>
-            Add New
+            Add +
           </button>
         </div>
       </div>
 
       <div className="content">
-        {activeComponent === 'table' ? (
+        {activeComponent === "table" ? (
           <Table columns={columns} dataSource={filteredData} />
         ) : (
-          <Analytics transactions = {transactions} />
+          <Analytics transactions={transactions} />
         )}
       </div>
 
@@ -342,7 +363,7 @@ function Dashboard() {
           </Form.Item>
 
           <div className="d-flex">
-            <button type="submit" className="save">
+            <button type="submit" className="addnewtrans">
               SAVE
             </button>
           </div>

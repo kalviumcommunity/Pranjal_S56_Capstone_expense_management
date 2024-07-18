@@ -5,7 +5,6 @@ const { connected } = require("./config/db");
 const { userModel } = require("./models/model");
 const bcrypt = require("bcrypt");
 const jwt = require("jsonwebtoken");
-const {friendsModel}  = require("./models/friends.js")
 
 const app = express();
 const port = process.env.PUBLIC_PORT || 3000;
@@ -25,57 +24,92 @@ app.get("/users", async (req, res) => {
   }
 });
 
-app.get('/friends/:user', async (req, res) => {
+app.get("/friends/:user", async (req, res) => {
   try {
-    let user = req.params.user
-    const friends = await userModel.find({});
+    let user = req.params.user;
+    const friends = await userModel.findOne({ _id: user });
     res.json(friends);
   } catch (error) {
     res.status(500).send(error.message);
   }
 });
 
-app.post('/addfriends', async (req, res) => {
+
+app.post("/addfriends/:user", async (req, res) => {
   const data = req.body;
+  let newObj = {...data , expenses: []}
+  let user = req.params.user;
   try {
-    const newFriend = new friendsModel(data);
-    await newFriend.save();
-    res.status(201).json(newFriend);
-  } catch (err) {
-    res.status(500).send(err.message);
-  }
-});
-
-app.delete('/friends/:id', async (req, res) => {
-  try {
-    const friend = await friendsModel.findByIdAndDelete(req.params.id);
-    if (!friend) {
-      return res.status(404).send('Friend not found');
-    }
-    res.status(200).send('Friend deleted');
-  } catch (err) {
-    res.status(500).send(err.message);
-  }
-});
-
-app.put('/friends/:id', async (req, res) => {
-  try {
-    const friendId = req.params.id;
-    const updatedFriendData = req.body;
-
-    const updatedFriend = await friendsModel.findByIdAndUpdate(friendId, updatedFriendData, { new: true });
+    await userModel.updateOne({ _id: user }, { $push: { friends: newObj } });
     
-    if (!updatedFriend) {
-      return res.status(404).send('Friend not found');
-    }
-
-    res.status(200).json(updatedFriend);
+    res.status(201).json(data);
   } catch (err) {
-    console.error('Error updating friend:', err);
-    res.status(500).send('Internal Server Error');
+    res.status(500).send(err.message);
   }
 });
 
+app.post("/addexpense/:id", async(req, res) => {
+  const data = req.body;
+  let userid = req.params.id
+  console.log(userid)
+  try {
+    console.log(data)
+    let user = await userModel.findOne({_id : userid})
+    console.log(user.friends)
+    res.status(200).json(data); 
+  } catch (err) {
+    console.error(err);
+    res.status(500).send("An error occurred");
+  }
+});
+
+
+app.delete("/deletefriend/:id/:userid", async (req, res) => {
+  try {
+    let id = req.params.id;
+    let userid = req.params.userid;
+
+    const user = await userModel.findByIdAndUpdate(
+      { _id: userid },
+      { $pull: { friends: { name: id } } },
+      { new: true }
+    );
+    if (!user) {
+      return res.status(404).send("Friend not found");
+    }
+    res.status(200).send("Friend deleted");
+  } catch (err) {
+    res.status(500).send(err.message);
+  }
+});
+
+app.put("/updatefriend/:friendName/:userId", async (req, res) => {
+  try {
+    // console.log("updated call")
+    const { friendName, userId } = req.params;
+    const { name: newName } = req.body;
+    // Find the user by userId
+    const user = await userModel.findById({ _id: userId });
+    // console.log(user);
+    if (!user) {
+      return res.status(404).send("User not found");
+    }
+
+    for (friend in user.friends){
+      if(user.friends[friend].name == friendName){
+        user.friends[friend].name = newName
+        break
+      }
+    }
+    
+    const newuser = await userModel.findByIdAndUpdate({_id: userId} , user)
+
+    res.status(200).send(newName);
+  } catch (err) {
+    console.error("Error updating friend:", err);
+    res.status(500).send("Internal Server Error");
+  }
+});
 
 app.post("/register", async (req, res) => {
   const data = req.body;
@@ -84,13 +118,13 @@ app.post("/register", async (req, res) => {
     if (emailVerify) {
       return res.send("User already exists");
     }
-    const saltRounds = 10; 
+    const saltRounds = 10;
     const hashPassword = await bcrypt.hash(data.password, saltRounds);
     const newUser = new userModel({
       name: data.name,
       email: data.email,
       password: hashPassword,
-      friends: []
+      friends: [],
     });
     await newUser.save();
     res.send("Congrats! You signed up successfully");
@@ -102,7 +136,7 @@ app.post("/register", async (req, res) => {
 app.post("/login", async (req, res) => {
   const { name, password } = req.body;
   try {
-    const user = await userModel.findOne({ name }); 
+    const user = await userModel.findOne({ name });
     if (!user) {
       return res.send("User not found. Please create an account.");
     }
@@ -117,7 +151,6 @@ app.post("/login", async (req, res) => {
         message: "You logged in successfully!",
         id: user._id,
       });
-
     } else {
       res.status(401).send("Incorrect password");
     }
@@ -126,8 +159,7 @@ app.post("/login", async (req, res) => {
   }
 });
 app.put("/updateTransaction/:id", async (req, res) => {
-
-  let { id } = req.params; 
+  let { id } = req.params;
   let body = req.body;
   try {
     await TransactionModel.updateOne({ _id: id }, body);
@@ -152,7 +184,6 @@ app.delete("/deleteTransaction/:id", async (req, res) => {
     console.error(err);
   }
 });
-
 
 app.listen(port, () => {
   connected();

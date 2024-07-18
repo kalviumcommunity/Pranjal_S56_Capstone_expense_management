@@ -11,7 +11,6 @@ import Display from "./Components/Display";
 import Expense from "./Components/Expense";
 import frndsNavbar from "./Components/FrndsNavbar";
 
-
 function App() {
   return (
     <>
@@ -19,16 +18,17 @@ function App() {
         <Routes>
           <Route path="/" element={<Home />}></Route>
           <Route path="/signin" element={<Signup />}></Route>
-          <Route path="/dashboard" element={<Dashboard/>}></Route>
-          <Route path="/friends" element={<Friends/>}></Route>
-          <Route path="/logout" element={<Logout/>}></Route>
-          <Route path="/login" element={<Login/>}></Route>
-          <Route path="/aboutus" element={<Aboutus/>}></Route>
-          <Route path="/analytics" element={<Analytics/>}></Route>
-          <Route path="friends/expense" element={<Expense/>}></Route>
-          <Route path="friends/expense/displaytransaction" element={<Display/>}></Route>
-
-
+          <Route path="/dashboard" element={<Dashboard />}></Route>
+          <Route path="/friends" element={<Friends />}></Route>
+          <Route path="/logout" element={<Logout />}></Route>
+          <Route path="/login" element={<Login />}></Route>
+          <Route path="/aboutus" element={<Aboutus />}></Route>
+          <Route path="/analytics" element={<Analytics />}></Route>
+          <Route path="friends/expense" element={<Expense />}></Route>
+          <Route
+            path="friends/expense/displaytransaction"
+            element={<Display />}
+          ></Route>
         </Routes>
       </BrowserRouter>
     </>

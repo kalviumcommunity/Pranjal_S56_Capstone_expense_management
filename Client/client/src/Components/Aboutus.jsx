@@ -1,27 +1,26 @@
 // Aboutus.jsx
 import React from "react";
 import Layout from "./Layout";
-import "../Styles/Aboutus.css"
+import "../Styles/Aboutus.css";
 import { MdMobileFriendly } from "react-icons/md";
 import { RiSecurePaymentFill } from "react-icons/ri";
 import { TbReport } from "react-icons/tb";
 import { RiCommunityFill } from "react-icons/ri";
-import Footer from "../Components/Footer"
-import welcomeimg from "../images/welcome.jpg"
+import Footer from "../Components/Footer";
+import welcomeimg from "../images/welcome.jpg";
 
 function Aboutus() {
   return (
     <Layout>
       <h1>Welcome to I-Finance!</h1>
       <div className="aboutfirst">
-      <p className="intro">
-        At I-Finance, we believe that managing your finances should be
-        straightforward, intuitive, and accessible to everyone.  Whether you're
-        tracking your personal income and expenses or managing a group's
-        contributions, we've got you covered.
-      
-      </p>
-      {/* <img  height={300} src={} alt="" /> */}
+        <p className="intro">
+          At I-Finance, we believe that managing your finances should be
+          straightforward, intuitive, and accessible to everyone. Whether you're
+          tracking your personal income and expenses or managing a group's
+          contributions, we've got you covered.
+        </p>
+        {/* <img  height={300} src={} alt="" /> */}
       </div>
 
       <h2>Our Mission</h2>
@@ -58,32 +57,37 @@ function Aboutus() {
 
       <ul class="benefits">
         <li>
-          
-          <strong><MdMobileFriendly/>  User-Friendly Interface: </strong> Our clean and intuitive design makes managing
-          your finances seamless. 
+          <strong>
+            <MdMobileFriendly /> User-Friendly Interface:{" "}
+          </strong>{" "}
+          Our clean and intuitive design makes managing your finances seamless.
         </li>
         <li>
-          <strong><RiSecurePaymentFill /> Secure and Private:</strong> We use top-notch security measures to ensure your
-          financial data is safe and private.
+          <strong>
+            <RiSecurePaymentFill /> Secure and Private:
+          </strong>{" "}
+          We use top-notch security measures to ensure your financial data is
+          safe and private.
         </li>
         <li>
-          <strong><TbReport /> Comprehensive Reports:</strong> Gain insights with detailed reports and
-          visualizations of your spending habits. Make better budgeting
-          decisions based on data.
+          <strong>
+            <TbReport /> Comprehensive Reports:
+          </strong>{" "}
+          Gain insights with detailed reports and visualizations of your
+          spending habits. Make better budgeting decisions based on data.
         </li>
         <li>
-          <strong><RiCommunityFill /> Community Support:</strong> Join our community to share tips, ask questions,
-          and support each other on your financial journeys.
+          <strong>
+            <RiCommunityFill /> Community Support:
+          </strong>{" "}
+          Join our community to share tips, ask questions, and support each
+          other on your financial journeys.
         </li>
       </ul>
 
       <h2 className="joinus">Join Us Today!</h2>
-     
 
-   
-
-    
-      <Footer/>
+      <Footer />
     </Layout>
   );
 }

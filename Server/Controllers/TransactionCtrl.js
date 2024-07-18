@@ -3,12 +3,11 @@ const { userModel } = require("../models/model");
 const moment = require("moment");
 
 const GetAllTransaction = async (req, res) => {
-  const id = req.params.id
-  console.log(id)
+  const id = req.params.id;
+  console.log(id);
   try {
-    const {frequency} = req.body
+    const { frequency } = req.body;
     const transaction = await TransactionModel.find({
-      
       // date:{
       //   $gt:moment().subtract(Number(frequency),'d').toDate(),
       // },

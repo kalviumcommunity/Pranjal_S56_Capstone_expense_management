@@ -25,10 +25,7 @@ function Signup() {
       };
 
       axios
-        .post(
-          "http://localhost:3000/register",
-          userData
-        )
+        .post("http://localhost:3000/register", userData)
         .then((res) => {
           alert(res.data);
           navigate("/");
@@ -103,7 +100,10 @@ function Signup() {
         {error && <div className="error">{error}</div>}
         <button className="signin">Sign in</button>
         <p className="login-link">
-          Already have an account? <NavLink to="/login" className={"navlog"}>Login</NavLink>
+          Already have an account?{" "}
+          <NavLink to="/login" className={"navlog"}>
+            Login
+          </NavLink>
         </p>
       </form>
     </>
