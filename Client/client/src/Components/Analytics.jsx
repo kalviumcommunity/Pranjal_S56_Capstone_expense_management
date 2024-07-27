@@ -30,7 +30,7 @@ const totalExpenseTurnoverPercent = Math.round((totalExpenseTurnover/totalTurnov
     <>
     <div className="charts">
     <div className="row">
-      <p>{`Total Transactions : ${totalTransaction}`}</p>
+      <h3>{`Total Transactions : ${totalTransaction}`}</h3>
       <h3 className='textinc'>{`Income : ${totalIncomeTransaction.length} `}</h3>
       <h3 className='textexp'>{`Expense : ${totalExpenseTransaction.length}`}</h3>
       
@@ -55,15 +55,16 @@ const totalExpenseTurnoverPercent = Math.round((totalExpenseTurnover/totalTurnov
     </div>
 
     <div className="row2">
-    <p>{`Total Turnover : ${totalTurnover}`}</p>
-      <h3 >{`Income : ${totalIncomeTurnover} `}</h3>
-      <h3 >{`Expense : ${totalExpenseTurnover}`}</h3>
+    <h3>{`Total Turnover : ${totalTurnover}`}</h3>
+      <h3 className='textinc' >{`Income : ${totalIncomeTurnover} `}</h3>
+      <h3 className='textexp'>{`Expense : ${totalExpenseTurnover}`}</h3>
       
         <div className="tracker">
 
     <Progress 
     type='circle'
     strokeColor='Green'
+
     // trailColor='white'
     
     percent={totalIncTurnoverPercent}

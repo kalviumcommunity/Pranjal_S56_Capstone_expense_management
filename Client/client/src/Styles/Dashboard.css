@@ -2,8 +2,14 @@
   display: flex;
   align-items: center;
   justify-content: space-between;
-  padding: 15px 20px;
-  box-shadow: 0 0 15px black;
+  padding: 30px 15px 20px 15px ;
+  /* border-bottom: 1px solid gray; */
+  background-color: #f4f4f4; 
+  /* margin: 20px 0px 25px 0px; */
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); 
+  margin-bottom: 20px;
+  box-shadow: 0 5px 20px 0px gray;
+
 }
 #desBox {
   width: 20px;
@@ -22,17 +28,29 @@ button:hover{
   cursor: pointer;
 }
 .addnewtrans{
-  border: 2px solid #ccc;
+  /* border: 2px solid #ccc; */
   font-size: 15px;
   padding: 5px 10px;
   border-radius: 10px;
-  background-color: black;
+  background-color: #037435;
   color: white;
 
 }
 .addnewtrans:hover{
   cursor: pointer;
   box-shadow: 2px 2px 2px rgb(95, 94, 94);
+  background-color: #289459;
+  /* color: white; */
+}
+
+.saveBtn:hover{
+  color: rgb(255, 208, 0);
+}
+.editBtn:hover{
+  color: blue;
+}
+.deleteBtn:hover{
+  color: red;
 }
 .chartIcon {
   width: 25px;

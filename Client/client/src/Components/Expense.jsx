@@ -1,19 +1,18 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import '../Styles/Expense.css'; 
 import axios from 'axios';
+import { Modal, Button, Input } from "antd";
 
 function Expense({ friendsList }) {
-  const [expenses, setExpenses] = useState([
-    { id: 1, name: 'xyz', amount: '0.00', color: 'blue' },
-    { id: 2, name: 'pqr', amount: '0.00', color: 'green' },
-    { id: 3, name: 'abc', amount: '0.00', color: 'red' }
-  ]);
+  const [friends, setFriends] = useState([]);
   const [selectedFriend, setSelectedFriend] = useState('');
   const [amount, setAmount] = useState('');
   const [reason, setReason] = useState('');
-  const [frndId , setFrndId] = useState(null)
+  const [frndId , setFrndId] = useState(null);
+  const [isModalOpen, setIsModalOpen] = useState(false);
+  const [currentExpense, setCurrentExpense] = useState({});
 
-  const colors = ['gray', 'red', 'blue', 'orange', 'green', 'yellow'];
+  const colors = ['gray', 'red', 'blue', 'orange', 'green', 'pink'];
   const randomColor = colors[Math.floor(Math.random() * colors.length)];
   const newExpense = {
     id: frndId,
@@ -23,22 +22,81 @@ function Expense({ friendsList }) {
     reason
   };
 
+  useEffect(()=>{
+    getFriends();
+  },[])
+
+  const getFriends = async ()=>{
+    let user = localStorage.getItem("id");
+    await axios.get(`http://localhost:3000/getFriends/${user}`)
+      .then((res)=>{
+        setFriends(res.data);
+      });
+  }
+
   const handleAddExpense = async () => {
     if (!selectedFriend || !amount) {
       alert("Please select a friend and enter an amount.");
     } else {
       try {
-        let user = localStorage.getItem("id")
+        let user = localStorage.getItem("id");
         
-        const res = await axios.post(`http://localhost:3000/addexpense/${user}`, newExpense);
-        setExpenses([...expenses, res.data]);
-        setSelectedFriend('');
-        setAmount('');
-        setReason('');
+        await axios.post(`http://localhost:3000/addexpense/${user}`, newExpense)
+        .then((res)=>{
+          console.log(res);
+          setFriends(res.data);
+          setSelectedFriend('');
+          setAmount('');
+          setReason('');
+        });
       } catch (error) {
         console.error("Error adding expense:", error);
       }
     }
+  };
+
+  const deleteExpense = async (i, j) => {
+    try {
+      const confirmed = window.confirm("Are you Sure?");
+      if (confirmed) {
+        let user = localStorage.getItem("id");
+        await axios.delete(`http://localhost:3000/friendexpense/${i}/${user}/${j}`)
+        .then((res)=>{
+          console.log(res);
+          getFriends();
+        });
+      }
+    } catch (error) {
+      console.error("Error deleting the expense:", error);
+    }
+  }
+
+  const handleEditExpense = (i, exp) => {
+    setCurrentExpense({
+      friendIndex: i,
+      expenseId: exp.expenseid,
+      amount: exp.amount,
+      reason: exp.reason,
+    });
+    setAmount(exp.amount);
+    setReason(exp.reason);
+    setIsModalOpen(true);
+  };
+
+  const handleOk = () => {
+    console.log({
+      friendIndex: currentExpense.friendIndex,
+      expenseId: currentExpense.expenseId,
+      newAmount: amount,
+      newReason: reason,
+    });
+    setIsModalOpen(false);
+    setAmount('');
+    setReason('');
+  };
+
+  const handleCancel = () => {
+    setIsModalOpen(false);
   };
 
   return (
@@ -51,7 +109,7 @@ function Expense({ friendsList }) {
           value={selectedFriend} 
           onChange={(e) => {
             setSelectedFriend(e.target.value);
-            setFrndId(e.target.selectedIndex - 1)
+            setFrndId(e.target.selectedIndex - 1);
           }}
         > 
           <option key={0} value="">Choose Friend</option>
@@ -59,16 +117,16 @@ function Expense({ friendsList }) {
             <option key={i + 1} value={el.name}>{el.name}</option>
           ))}
         </select>
-        <input 
+        <Input 
           type="text" 
           placeholder="Amount" 
           className="amount-input" 
           value={amount}
           onChange={(e) => setAmount(e.target.value)}
         />
-        <button className="add-button" onClick={handleAddExpense}>+</button>
+        <Button className="add-button" onClick={handleAddExpense}>+</Button>
       </div>
-      <input 
+      <Input 
         type="text" 
         placeholder="Reason (optional)" 
         className="reason-input" 
@@ -76,21 +134,51 @@ function Expense({ friendsList }) {
         onChange={(e) => setReason(e.target.value)}
       />
       <div className="expense-list">
-        {expenses.map(expense => (
-          <div key={expense.id} className="expense-item">
-            <div className="expense-icon" style={{ backgroundColor: expense.color }}>
-              {expense.name.charAt(0).toUpperCase()}
+        {friends && friends.map((friend, i) => {
+          return (
+            <div key={i} className="friend-expenses">
+              {friend.expenses && friend.expenses.map((exp, j) => {
+                return (
+                  <div key={exp.expenseid} className="expense-item">
+                    <div className="expense-icon" style={{ backgroundColor: 'gray' }}>
+                      {friend.name[0]}
+                    </div>  
+                    <span className="expense-name">
+                      {friend.name} paid ₹{exp.amount} {exp.reason && `for ${exp.reason}`}
+                    </span>
+                    <div className="expense-actions">
+                      <Button className="edit-button" onClick={() => handleEditExpense(i, exp)}>✏️</Button>
+                      <Button className="delete-button" onClick={() => deleteExpense(i, exp.expenseid)}>🗑️</Button>
+                    </div>
+                  </div>
+                );
+              })}
             </div>
-            <span className="expense-name">
-              {expense.name} paid ${expense.amount} {expense.reason && `for ${expense.reason}`}
-            </span>
-            <div className="expense-actions">
-              <button className="edit-button">✏️</button>
-              <button className="delete-button">🗑️</button>
-            </div>
-          </div>
-        ))}
+          );
+        })}
       </div>
+
+      <Modal 
+        title="Edit Expense" 
+        open={isModalOpen} 
+        onOk={handleOk} 
+        onCancel={handleCancel}
+      >
+        <label >Amount : <Input 
+          type="text" 
+          name='new Amount'
+          value={amount} 
+          onChange={(e) => setAmount(e.target.value)} 
+          className="edit-amount-input"
+        /></label>
+        <br /><br />
+        <label>Reason :<Input 
+          type="text" 
+          value={reason} 
+          onChange={(e) => setReason(e.target.value)} 
+          className="edit-reason-input"
+        /></label>
+      </Modal>
     </div>
   );
 }

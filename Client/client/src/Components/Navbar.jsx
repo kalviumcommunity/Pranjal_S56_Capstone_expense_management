@@ -31,7 +31,7 @@ function Navbar({ profilePhotoUrl }) {
             <p className="tag">Login</p>
           </NavLink>
           {/* {profilePhotoUrl && <img className="profile-photo" src={profilePhotoUrl} alt="Profile" />} */}
-          <button className="logout">Logout</button>
+          {/* <button className="logout">Logout</button> */}
         </div>
       </div>
     </div>

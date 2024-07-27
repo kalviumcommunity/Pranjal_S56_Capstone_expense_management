@@ -20,7 +20,7 @@ function Home() {
           </h1>
           <button className="started">
             <NavLink className="nave" to={"/signin"}>
-              <p className="getstart">Get Started</p>
+              <p className="getstart">EXPLORE</p>
             </NavLink>
           </button>
           <p className="substatement">

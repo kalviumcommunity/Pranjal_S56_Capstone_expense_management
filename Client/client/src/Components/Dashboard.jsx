@@ -173,15 +173,15 @@ function Dashboard() {
           }}
         >
           {editableRow === record.key ? (
-            <button onClick={() => handleSave(record)}>
+            <button className="saveBtn" onClick={() => handleSave(record)}>
               <BiSolidSave />
             </button>
           ) : (
-            <button onClick={() => handleEdit(record)}>
+            <button className="editBtn" onClick={() => handleEdit(record)}>
               <MdModeEditOutline />
             </button>
           )}
-          <button onClick={() => handleDelete(record)}>
+          <button className="deleteBtn" onClick={() => handleDelete(record)}>
             <MdDelete />
           </button>
         </span>
@@ -279,7 +279,7 @@ function Dashboard() {
             <Select.Option value="7">Last 1 Week</Select.Option>
             <Select.Option value="30">Last 1 Month</Select.Option>
             <Select.Option value="365">Last 1 Year</Select.Option>
-            <Select.Option value="custom">Custom</Select.Option>
+            
           </Select>
         </div>
 
