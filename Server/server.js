@@ -124,12 +124,17 @@ app.delete("/friendexpense/:id/:userid/:expenseid", async (req, res) => {
 });
 
 
-app.put("/updatefriend/:id/:userid/:expenseid", async (req, res) => {
+app.put("/updateexpense/:userid", async (req, res) => {
   try {
-    let id = req.params.id;
+    let id = req.body.friendIndex;
     let userid = req.params.userid;
-    let expid = parseInt(req.params.expenseid, 10);
-    let updatedExpense = req.body;
+    let expid = req.body.expenseId;
+    let updatedExpense = {
+      expenseid : expid,
+      amount : req.body.newAmount,
+      reason : req.body.newReason
+    };
+    console.log(updatedExpense)
 
     let user = await userModel.findOne({ _id: userid });
     if (!user) {
@@ -140,16 +145,13 @@ app.put("/updatefriend/:id/:userid/:expenseid", async (req, res) => {
       return res.status(400).send("Invalid friend index");
     }
 
-    let expenseIndex = user.friends[id].expenses.findIndex(exp => exp.expenseid === expid);
-    if (expenseIndex === -1) {
-      return res.status(404).send("Expense not found");
-    }
-
     let expensePath = `friends.${id}.expenses.${expid}`;
     await userModel.updateOne(
       { _id: userid },
       { $set: { [expensePath]: updatedExpense } }
     );
+    let updatedUser = await userModel.findOne({ _id: userid });
+    console.log(updatedUser.friends[id].expenses);
 
     res.status(200).send("Expense updated successfully");
   } catch (err) {

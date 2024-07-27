@@ -71,6 +71,7 @@ function Expense({ friendsList }) {
     }
   }
 
+  
   const handleEditExpense = (i, exp) => {
     setCurrentExpense({
       friendIndex: i,
@@ -84,6 +85,17 @@ function Expense({ friendsList }) {
   };
 
   const handleOk = () => {
+    const userid = localStorage.getItem("id")
+    axios.put(`http://localhost:3000/updateexpense/${userid}`,{
+      friendIndex: currentExpense.friendIndex,
+      expenseId: currentExpense.expenseId,
+      newAmount: amount,
+      newReason: reason,
+    })
+    .then((res)=>{
+      console.log(res)
+      getFriends()
+    })
     console.log({
       friendIndex: currentExpense.friendIndex,
       expenseId: currentExpense.expenseId,
