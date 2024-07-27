@@ -16,7 +16,6 @@ function Friends() {
   const [editMode, setEditMode] = useState(false);
   const [currentFriendId, setCurrentFriendId] = useState(null);
   const [editFriendName, setEditFriendName] = useState('');
-
   const [ showFriendsList , setShowFriendsList ] = useState(true)
   const [ showExpenses, setShowExpenses ] = useState(false)
   const [ showTransactions , setShowTransactions ] = useState(false)
@@ -25,8 +24,10 @@ function Friends() {
     const fetchFriends = async () => {
       try {
         const user = localStorage.getItem("id");
-        const response = await axios.get(`http://localhost:3000/friends/${user}`);
-        setFriendsList(response.data);
+        const response = await axios.get(
+          `http://localhost:3000/friends/${user}`
+        );
+        setFriendsList(response.data.friends);
       } catch (err) {
         console.error(err);
       }
@@ -38,7 +39,8 @@ function Friends() {
   const addNewFriends = async () => {
     if (friend) {
       try {
-        const response = await axios.post('http://localhost:3000/addfriends', { name: friend });
+        const user = localStorage.getItem("id");
+        const response = await axios.post(`http://localhost:3000/addfriends/${user}`, { name: friend });
         setFriendsList([...friendsList, response.data]);
         setFriend('');
       } catch (err) {
@@ -49,26 +51,32 @@ function Friends() {
 
   const deleteFriend = async (id) => {
     try {
-      await axios.delete(`http://localhost:3000/friends/${id}`);
-      setFriendsList(friendsList.filter((friend) => friend._id !== id));
+      const user = localStorage.getItem("id");
+      await axios.delete(`http://localhost:3000/deletefriend/${id}/${user}`);
+      setFriendsList(friendsList.filter((friend) => friend.name !== id));
     } catch (err) {
       console.error(err);
     }
   };
 
-  const startEditFriend = (id, name) => {
+  const startEditFriend = (name) => {
     setEditMode(true);
-    setCurrentFriendId(id);
+    setCurrentFriendId(name);
     setEditFriendName(name);
   };
 
   const saveEditFriend = async () => {
     try {
-      const response = await axios.put(`http://localhost:3000/friends/${currentFriendId}`, { name: editFriendName });
-      setFriendsList(friendsList.map(friend => (friend._id === currentFriendId ? response.data : friend)));
-      setEditMode(false);
-      setCurrentFriendId(null);
-      setEditFriendName('');
+      if (editFriendName != ""){
+        // console.log(editFriendName)
+        const user = localStorage.getItem("id");
+        const response = await axios.put(`http://localhost:3000/updatefriend/${currentFriendId}/${user}`, { name: editFriendName });
+        console.log(response)
+        setFriendsList(friendsList.map(friend => (friend.name === currentFriendId ? {"name" : response.data} : friend)));
+        setEditMode(false);
+        setCurrentFriendId(null);
+        setEditFriendName('');
+      }
     } catch (err) {
       console.error(err);
     }
@@ -87,12 +95,13 @@ function Friends() {
             value={friend}
             onChange={(e) => setFriend(e.target.value)}
           />
-          <button onClick={addNewFriends}>+</button>
+          <button className='addbutton' onClick={addNewFriends}>+</button>
         </div>
         <div className="friends-list">
-          {friendsList.map((friend) => (
-            <div key={friend._id} className="friend-item">
-              {editMode && currentFriendId === friend._id ? (
+          
+          {friendsList.length==0? "" : friendsList.map((friend) => (
+            <div key={friend.name} className="friend-item">
+              {editMode && currentFriendId === friend.name ? (
                 <input
                   type="text"
                   value={editFriendName}
@@ -102,12 +111,12 @@ function Friends() {
                 <span>{friend.name}</span>
               )}
               <div className="btnss">
-                <button onClick={() => deleteFriend(friend._id)}><MdDelete /></button>
+                <button onClick={() => deleteFriend(friend.name)}><MdDelete /></button>
                 
-                {editMode && currentFriendId === friend._id ? (
-                  <button onClick={saveEditFriend}><BiSolidSave /></button>
+                {editMode && currentFriendId === friend.name ? (
+                  <button onClick={saveEditFriend}><BiSolidSave/></button>
                 ) : (
-                  <button onClick={() => startEditFriend(friend._id, friend.name)}><MdModeEditOutline /></button>
+                  <button onClick={() => startEditFriend(friend.name)}><MdModeEditOutline /></button>
                 )}
               </div>
             </div>
@@ -115,7 +124,7 @@ function Friends() {
         </div>
       </div>}
 
-      {showExpenses && <Expense />}
+      {showExpenses && <Expense friendsList={friendsList}/>}
       {showTransactions && <Display />}
       
     </Layout>

@@ -1,67 +1,67 @@
 .footer {
-    margin-top: 30px;
-    background-color: #222833;
-    padding: 3rem 4rem 2rem;
-    color: #fff;
+  margin-top: 30px;
+  background-color: #222833;
+  padding: 3rem 4rem 2rem;
+  color: #fff;
 }
 
 .footer-content {
-    display: flex;
-    justify-content: space-evenly;
+  display: flex;
+  justify-content: space-evenly;
 }
 
 .text {
-    padding-right: 20px;
+  padding-right: 20px;
 }
 
 .footer-section h2 {
-    font-size: 1.3rem;
-    margin-bottom: 2rem;
-    height: 40px;
+  font-size: 1.3rem;
+  margin-bottom: 2rem;
+  height: 40px;
 }
 
 .footer-section a,
 .footer-section p {
-    color: #ccc;
-    text-decoration: none;
-    line-height: 30px;
-    font-weight: 170;
+  color: #ccc;
+  text-decoration: none;
+  line-height: 30px;
+  font-weight: 170;
 }
 
 .footer-section a {
-    cursor: pointer;
+  cursor: pointer;
 }
 
 .footer-section.links ul {
-    display: flex;
-    flex-wrap: wrap;
-    margin-right: 90px;
-    flex-direction: column;
+  display: flex;
+  flex-wrap: wrap;
+  margin-right: 90px;
+  flex-direction: column;
 }
 
 .footer-section.links ul li {
-    margin-right: 1rem;
+  margin-right: 1rem;
 }
 
 .footer-section.contact ul li {
-    margin-bottom: 0.5rem;
-    color: #ccc;
-    font-weight: 100;
+  margin-bottom: 0.5rem;
+  color: #ccc;
+  font-weight: 100;
 }
 
 .icons {
-    display: flex;
-    margin: 30px 10px 20px 0px;
-    width: 300px;
-    justify-content: space-around;
+  display: flex;
+  margin: 30px 10px 20px 0px;
+  width: 300px;
+  justify-content: space-around;
 }
 
 .icons a {
-    text-decoration: none;
-    color: #ccc;
+  text-decoration: none;
+  color: #ccc;
 }
 
 .icons a:hover {
-    box-shadow: 0 4px 8px 0 rgba(142, 137, 137, 0.222),
-        0 6px 20px 0 rgb(63, 63, 64);
+  box-shadow: 0 4px 8px 0 rgba(142, 137, 137, 0.222),
+    0 6px 20px 0 rgb(63, 63, 64);
 }

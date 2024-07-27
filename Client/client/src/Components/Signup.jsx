@@ -14,21 +14,27 @@ function Signup() {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-
-    if (password !== confirmPass) {
-      setError("Passwords do not match");
-    } else {
+    const userNameRegex = /^[A-Za-z ]+$/;
+    const emailRegex = /^[a-z][a-z0-9]*@gmail\.com$/;
+    if (!userNameRegex.test(username)){
+      alert("Username can only contain alphabets")
+    }
+    else if(!emailRegex.test(email)){
+      alert("The email should contain atleast one alphabet")
+    }
+    else if (password !== confirmPass) {
+      alert("Passwords do not match");
+    } 
+    else {
       const userData = {
         name: username,
         email: email,
         password: password,
       };
+    
 
       axios
-        .post(
-          "http://localhost:3000/register",
-          userData
-        )
+        .post("http://localhost:3000/register", userData)
         .then((res) => {
           alert(res.data);
           navigate("/");
@@ -51,12 +57,14 @@ function Signup() {
         <label className="labels">
           Username:{" "}
           <div>
+            
             <input
               required
               className="inpbox"
               type="text"
               placeholder="Enter your name"
               value={username}
+              
               onChange={(e) => setUsername(e.target.value)}
             />
           </div>
@@ -101,9 +109,12 @@ function Signup() {
           </div>
         </label>
         {error && <div className="error">{error}</div>}
-        <button className="signin">Sign in</button>
+        <button className="signin">Sign Up</button>
         <p className="login-link">
-          Already have an account? <NavLink to="/login" className={"navlog"}>Login</NavLink>
+          Already have an account?{" "}
+          <NavLink to="/login" className={"navlog"}>
+            Login
+          </NavLink>
         </p>
       </form>
     </>
