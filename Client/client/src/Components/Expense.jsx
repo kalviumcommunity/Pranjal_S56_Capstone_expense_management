@@ -136,7 +136,7 @@ function Expense({ friendsList }) {
           value={amount}
           onChange={(e) => setAmount(e.target.value)}
         />
-        <Button className="add-button" onClick={handleAddExpense}>+</Button>
+        <Button className="add-btn" onClick={handleAddExpense}>+</Button>
       </div>
       <Input 
         type="text" 

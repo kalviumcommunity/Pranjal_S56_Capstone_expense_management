@@ -125,7 +125,7 @@ function Friends() {
       </div>}
 
       {showExpenses && <Expense friendsList={friendsList}/>}
-      {showTransactions && <Display />}
+      {showTransactions && <Display  />}
       
     </Layout>
     </>

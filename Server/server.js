@@ -5,6 +5,8 @@ const { connected } = require("./config/db");
 const { userModel } = require("./models/model");
 const bcrypt = require("bcrypt");
 const jwt = require("jsonwebtoken");
+// const {ProtectedRoute} = require("./Controllers/ProtectedRoute.js")
+const {upload} = require("./multer.js")
 
 const app = express();
 const port = process.env.PUBLIC_PORT || 3000;
@@ -51,12 +53,17 @@ app.post("/addfriends/:user", async (req, res) => {
 app.post("/addexpense/:id", async(req, res) => {
   const data = req.body;
   let userid = req.params.id
-  // console.log(userid)
+  
   try {
-    // console.log(data)
-    // console.log(user.friends[data.id].expenses)
     let user = await userModel.findOne({_id : userid})
-    let newId = user.friends[data.id].expenses.length + 1
+    let newId;
+    if (user.friends[data.id].expenses.length==0){
+      newId = 1
+    }
+    else{
+
+      newId = user.friends[data.id].expenses[user.friends[data.id].expenses.length-1].expenseid + 1
+    }
     await userModel.updateOne(
       { _id: userid },
       { $push: { [`friends.${data.id}.expenses`]: {expenseid: newId , amount: data.amount , reason: data.reason} } }
@@ -145,10 +152,10 @@ app.put("/updateexpense/:userid", async (req, res) => {
       return res.status(400).send("Invalid friend index");
     }
 
-    let expensePath = `friends.${id}.expenses.${expid}`;
+    let expensePath = `friends.${id}.expenses`;
     await userModel.updateOne(
-      { _id: userid },
-      { $set: { [expensePath]: updatedExpense } }
+      { _id: userid, [`${expensePath}.expenseid`]: expid },
+      { $set: { [`${expensePath}.$`]: updatedExpense } }
     );
     let updatedUser = await userModel.findOne({ _id: userid });
     console.log(updatedUser.friends[id].expenses);
@@ -160,7 +167,18 @@ app.put("/updateexpense/:userid", async (req, res) => {
   }
 });
 
-
+app.post('/upload/:userid', upload.single('image'),  async (req, res) => {
+  let userid = req.params.userid;
+  
+  try {
+    const result = await cloudinary.uploader.upload(req.file.path);
+    await userModel.findOneAndUpdate({ _id: id }, { profileImg: result.url });
+    res.status(200).send({ url: result.url });
+  } catch (err) {
+    console.error(err);
+    res.status(500).send({ error: err.message });
+  }
+});
 
 app.delete("/deletefriend/:id/:userid", async (req, res) => {
   try {
