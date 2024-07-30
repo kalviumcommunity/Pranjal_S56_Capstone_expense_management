@@ -25,7 +25,7 @@ function Friends() {
       try {
         const user = localStorage.getItem("id");
         const response = await axios.get(
-          `http://localhost:3000/friends/${user}`
+          `https://pranjal-s56-capstone-expense-management-7.onrender.com/friends/${user}`
         );
         setFriendsList(response.data.friends);
       } catch (err) {
@@ -40,7 +40,7 @@ function Friends() {
     if (friend) {
       try {
         const user = localStorage.getItem("id");
-        const response = await axios.post(`http://localhost:3000/addfriends/${user}`, { name: friend });
+        const response = await axios.post(`https://pranjal-s56-capstone-expense-management-7.onrender.com/addfriends/${user}`, { name: friend });
         setFriendsList([...friendsList, response.data]);
         setFriend('');
       } catch (err) {
@@ -52,7 +52,7 @@ function Friends() {
   const deleteFriend = async (id) => {
     try {
       const user = localStorage.getItem("id");
-      await axios.delete(`http://localhost:3000/deletefriend/${id}/${user}`);
+      await axios.delete(`https://pranjal-s56-capstone-expense-management-7.onrender.com/deletefriend/${id}/${user}`);
       setFriendsList(friendsList.filter((friend) => friend.name !== id));
     } catch (err) {
       console.error(err);
@@ -70,7 +70,7 @@ function Friends() {
       if (editFriendName != ""){
         // console.log(editFriendName)
         const user = localStorage.getItem("id");
-        const response = await axios.put(`http://localhost:3000/updatefriend/${currentFriendId}/${user}`, { name: editFriendName });
+        const response = await axios.put(`https://pranjal-s56-capstone-expense-management-7.onrender.com/updatefriend/${currentFriendId}/${user}`, { name: editFriendName });
         console.log(response)
         setFriendsList(friendsList.map(friend => (friend.name === currentFriendId ? {"name" : response.data} : friend)));
         setEditMode(false);

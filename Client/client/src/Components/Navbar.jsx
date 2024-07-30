@@ -3,9 +3,9 @@ import { useNavigate, NavLink } from "react-router-dom";
 import logo from "../images/Logo.png";
 import "../Styles/Navbar.css";
 
-function Navbar({ profilePhotoUrl }) {
+function Navbar() {
   const navigate = useNavigate();
-
+  console.log(localStorage.getItem("profile"))
    const handleLogout = () => {
     window.confirm("Are you sure you want to log out?")
     localStorage.removeItem("token");
@@ -49,8 +49,9 @@ function Navbar({ profilePhotoUrl }) {
               <button className="login">Login</button>
             </NavLink>
           )}
-          <NavLink to={"/profile"}><button className="photo">photo</button></NavLink>
-          {/* {profilePhotoUrl && <img className="profile-photo" src={profilePhotoUrl} alt="Profile" />} */}
+
+          {isLoggedIn && <NavLink to={"/profile"}><button className="photo"><img src={localStorage.getItem("profile")} alt="hello" /></button></NavLink>}
+          
         </div>
       </div>
           

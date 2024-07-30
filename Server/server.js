@@ -7,6 +7,7 @@ const bcrypt = require("bcrypt");
 const jwt = require("jsonwebtoken");
 // const {ProtectedRoute} = require("./Controllers/ProtectedRoute.js")
 const {upload} = require("./multer.js")
+const cloudinary = require("./cloudinary.js")
 
 const app = express();
 const port = process.env.PUBLIC_PORT || 3000;
@@ -172,7 +173,7 @@ app.post('/upload/:userid', upload.single('image'),  async (req, res) => {
   
   try {
     const result = await cloudinary.uploader.upload(req.file.path);
-    await userModel.findOneAndUpdate({ _id: id }, { profileImg: result.url });
+    await userModel.findOneAndUpdate({ _id: userid }, { profileImg: result.url });
     res.status(200).send({ url: result.url });
   } catch (err) {
     console.error(err);
@@ -264,6 +265,7 @@ app.post("/login", async (req, res) => {
         token: token,
         message: "You logged in successfully!",
         id: user._id,
+        profile: user.profile
       });
     } else {
       res.status(401).send("Incorrect password");

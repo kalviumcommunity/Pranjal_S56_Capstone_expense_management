@@ -9,48 +9,50 @@ function Profile() {
 
   const handleFileUpload = (e) => {
     console.log(e.target.value);
-    let note = toast.loading("Uploading Image..!!", {
-      position: "top-center",
-    });
+    // let note = toast.loading("Uploading Image..!!", {
+    //   position: "top-center",
+    // });
     let file = e.target.files[0];
     let formData = new FormData();
     formData.append("image", file);
-    let user = localStorage.getItem("user")
+    const user = localStorage.getItem("id")
     axios
-      .post(`https://s56-ayush-capstone-dopahiya.onrender.com/upload/${user}`, formData)
+      .post(`http://localhost:3000/upload/${user}`, formData)
       .then((res) => {
+        console.log(res.data)
+       
         let obj = { ...userData, profileImg: res.data.url };
         setUserData(obj);
-        sessionStorage.setItem("profileImg", res.data.url);
-        toast.update(note, {
-          render: "Image Uploaded Successfully",
-          type: "success",
-          isLoading: false,
-          autoClose: 1000,
-          hideProgressBar: true,
-          theme: "colored",
-        });
+        localStorage.setItem("profile", res.data.url);
+        // toast.update(note, {
+        //   render: "Image Uploaded Successfully",
+        //   type: "success",
+        //   isLoading: false,
+        //   autoClose: 1000,
+        //   hideProgressBar: true,
+        //   theme: "colored",
+        // });
       })
       .catch((err) => {
-        if (err.response.status === 401) {
-          return toast.update(note, {
-            render: err.response.data,
-            type: "warning",
-            isLoading: false,
-            autoClose: 1000,
-            hideProgressBar: true,
-            theme: "colored",
-          });
-        }
+        // if (err.response.status === 401) {
+        //   return toast.update(note, {
+        //     render: err.response.data,
+        //     type: "warning",
+        //     isLoading: false,
+        //     autoClose: 1000,
+        //     hideProgressBar: true,
+        //     theme: "colored",
+        //   });
+        // }
         console.log(err);
-        toast.update(note, {
-          render: "Error Uploading Image",
-          type: "error",
-          isLoading: false,
-          autoClose: 1000,
-          hideProgressBar: true,
-          theme: "colored",
-        });
+        // toast.update(note, {
+        //   render: "Error Uploading Image",
+        //   type: "error",
+        //   isLoading: false,
+        //   autoClose: 1000,
+        //   hideProgressBar: true,
+        //   theme: "colored",
+        // });
       });
   };
 
@@ -61,10 +63,12 @@ function Profile() {
         <h3 className="title">
           Update your profile to personalize your experience.
         </h3>
+        <img src={userData.profileImg} alt="" />
         <input
           type="file"
           name="profile-picture"
           id="profile-picture"
+          
           onChange={handleFileUpload}
         />
         <label htmlFor="username">
