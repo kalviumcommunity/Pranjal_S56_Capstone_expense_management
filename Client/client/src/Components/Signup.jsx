@@ -34,7 +34,7 @@ function Signup() {
     
 
       axios
-        .post("http://localhost:3000/register", userData)
+        .post("https://pranjal-s56-capstone-expense-management-7.onrender.com/register", userData)
         .then((res) => {
           alert(res.data);
           navigate("/");

@@ -28,7 +28,7 @@ function Expense({ friendsList }) {
 
   const getFriends = async ()=>{
     let user = localStorage.getItem("id");
-    await axios.get(`http://localhost:3000/getFriends/${user}`)
+    await axios.get(`https://pranjal-s56-capstone-expense-management-7.onrender.com/getFriends/${user}`)
       .then((res)=>{
         setFriends(res.data);
       });
@@ -41,7 +41,7 @@ function Expense({ friendsList }) {
       try {
         let user = localStorage.getItem("id");
         
-        await axios.post(`http://localhost:3000/addexpense/${user}`, newExpense)
+        await axios.post(`https://pranjal-s56-capstone-expense-management-7.onrender.com/addexpense/${user}`, newExpense)
         .then((res)=>{
           console.log(res);
           setFriends(res.data);
@@ -60,7 +60,7 @@ function Expense({ friendsList }) {
       const confirmed = window.confirm("Are you Sure?");
       if (confirmed) {
         let user = localStorage.getItem("id");
-        await axios.delete(`http://localhost:3000/friendexpense/${i}/${user}/${j}`)
+        await axios.delete(`https://pranjal-s56-capstone-expense-management-7.onrender.com/friendexpense/${i}/${user}/${j}`)
         .then((res)=>{
           console.log(res);
           getFriends();
@@ -86,7 +86,7 @@ function Expense({ friendsList }) {
 
   const handleOk = () => {
     const userid = localStorage.getItem("id")
-    axios.put(`http://localhost:3000/updateexpense/${userid}`,{
+    axios.put(`https://pranjal-s56-capstone-expense-management-7.onrender.com/updateexpense/${userid}`,{
       friendIndex: currentExpense.friendIndex,
       expenseId: currentExpense.expenseId,
       newAmount: amount,

@@ -35,7 +35,7 @@
 .footer-section.links ul {
   display: flex;
   flex-wrap: wrap;
-  margin-right: 90px;
+  margin-right: 0px;
   flex-direction: column;
 }
 
@@ -47,6 +47,7 @@
   margin-bottom: 0.5rem;
   color: #ccc;
   font-weight: 100;
+  
 }
 
 .icons {

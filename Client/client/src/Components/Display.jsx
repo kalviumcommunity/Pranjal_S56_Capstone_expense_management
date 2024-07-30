@@ -24,7 +24,7 @@ const Display = () => {
   const getFriends = async () => {
     let user = localStorage.getItem("id");
     try {
-      const response = await axios.get(`http://localhost:3000/getFriends/${user}`);
+      const response = await axios.get(`https://pranjal-s56-capstone-expense-management-7.onrender.com/getFriends/${user}`);
       const friendsData = response.data;
       setFriends(friendsData);
 

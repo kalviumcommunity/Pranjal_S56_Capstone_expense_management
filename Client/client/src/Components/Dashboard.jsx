@@ -36,7 +36,7 @@ function Dashboard() {
 
       // Make PUT request to update transaction
       await axios.put(
-        `http://localhost:3000/updateTransaction/${record._id}`,
+        `https://pranjal-s56-capstone-expense-management-7.onrender.com/updateTransaction/${record._id}`,
         updatedTransaction
       );
       setLoading(false);
@@ -67,7 +67,7 @@ function Dashboard() {
       setLoading(true);
       // Make DELETE request to delete transaction
       await axios.delete(
-        `http://localhost:3000/deleteTransaction/${record._id}`
+        `https://pranjal-s56-capstone-expense-management-7.onrender.com/deleteTransaction/${record._id}`
       );
       setLoading(false);
       message.success("Transaction deleted successfully");
@@ -193,7 +193,7 @@ function Dashboard() {
     try {
       const user = localStorage.getItem("id");
       const res = await axios.get(
-        `http://localhost:3000/getTransaction/${user}`
+        `https://pranjal-s56-capstone-expense-management-7.onrender.com/getTransaction/${user}`
       );
       setTransactions(res.data);
     } catch (err) {
@@ -244,7 +244,7 @@ function Dashboard() {
       setLoading(true);
 
       // Save to MongoDB
-      await axios.post("http://localhost:3000/addTransaction", {
+      await axios.post("https://pranjal-s56-capstone-expense-management-7.onrender.com/addTransaction", {
         data: values,
         id: user,
       });

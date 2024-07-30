@@ -52,17 +52,15 @@ const Footer = () => {
             <h2>Quick Links</h2>
             <ul>
               <li>
-                <a href="#">Home</a>
+                <a href="/">Home</a>
               </li>
               <li>
-                <a href="#">About</a>
+                <a href="/aboutus">About</a>
               </li>
               <li>
-                <a href="#">Services</a>
+                <a href="/friends">Friends</a>
               </li>
-              <li>
-                <a href="#">Contact</a>
-              </li>
+              
             </ul>
           </div>
           <div className="footer-section contact">
