@@ -18,6 +18,7 @@
   font-size: 1.3rem;
   margin-bottom: 2rem;
   height: 40px;
+  /* margin-left: 100px; */
 }
 
 .footer-section a,
@@ -35,19 +36,37 @@
 .footer-section.links ul {
   display: flex;
   flex-wrap: wrap;
-  margin-right: 0px;
+  margin-right: 100px;
   flex-direction: column;
 }
 
 .footer-section.links ul li {
-  margin-right: 1rem;
+  margin-left: 50px;
+
 }
 
+.footer-section.contact ul{
+  display: flex;
+  flex-wrap: wrap;
+  margin-right: 38px;
+  flex-direction: column;
+}
 .footer-section.contact ul li {
   margin-bottom: 0.5rem;
   color: #ccc;
   font-weight: 100;
   
+}
+.footer-section.links{
+  margin-left: 100px;
+  position: relative;
+}
+
+.footer-section.contact{
+  /* margin-right: 200px; */
+  position: relative;
+  left: 100px;
+
 }
 
 .icons {
