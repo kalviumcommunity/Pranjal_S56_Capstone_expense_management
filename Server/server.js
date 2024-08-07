@@ -17,6 +17,13 @@ const TransactionModel = require("./models/Transaction.js");
 app.use(express.json());
 app.use(cors());
 app.use(router);
+app.use((req, res, next) => {
+  res.setHeader('Cross-Origin-Opener-Policy', 'same-origin');
+  res.setHeader('Cross-Origin-Embedder-Policy', 'require-corp');
+  // Uncomment the line below if you want to allow popups from same origin
+  // res.setHeader('Cross-Origin-Opener-Policy', 'same-origin-allow-popups');
+  next();
+});
 
 app.get("/users", async (req, res) => {
   try {
