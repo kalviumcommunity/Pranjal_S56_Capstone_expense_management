@@ -4,10 +4,12 @@ import logo from "../images/Logo.png";
 import "../Styles/Navbar.css";
 import { toast, ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
+import { GoogleLogout } from "react-google-login";
 
+const clientID = "311238508492-i7o334gljj6h57ped9mdie180691do8e.apps.googleusercontent.com"
 function Navbar() {
   const navigate = useNavigate();
-
+          
   const handleLogout = () => {
     if (window.confirm("Are you sure you want to log out?")) {
       localStorage.removeItem("token");
@@ -16,8 +18,10 @@ function Navbar() {
       localStorage.removeItem("profile");
 
       toast.success("You have successfully logged out. We hope to see you again soon!");
-      navigate("/");
+      
     }
+    navigate("/");
+    // window.location.reload()
   };
 
   const isLoggedIn = !!localStorage.getItem("token");

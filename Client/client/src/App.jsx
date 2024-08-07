@@ -8,26 +8,38 @@ import Aboutus from "./Components/Aboutus";
 import Analytics from "./Components/Analytics";
 import Display from "./Components/Display";
 import Expense from "./Components/Expense";
-import Profile from "./Components/Profile"
+import Profile from "./Components/Profile";
+import { useEffect } from "react";
+import { gapi } from "gapi-script";
+
+const clientID = "311238508492-i7o334gljj6h57ped9mdie180691do8e.apps.googleusercontent.com";
 
 function App() {
+  useEffect(() => {
+    function start() {
+      gapi.client.init({
+        clientId: clientID,
+        scope: "",
+      });
+    }
+
+    gapi.load("client:auth2", start);
+  }, []); 
+
   return (
     <>
       <BrowserRouter>
         <Routes>
-          <Route path="/" element={<Home />}></Route>
-          <Route path="/signin" element={<Signup />}></Route>
-          <Route path="/dashboard" element={<Dashboard />}></Route>
-          <Route path="/friends" element={<Friends />}></Route>
-          <Route path="/login" element={<Login />}></Route>
-          <Route path="/aboutus" element={<Aboutus />}></Route>
-          <Route path="/analytics" element={<Analytics />}></Route>
-          <Route path="friends/expense" element={<Expense />}></Route>
-          <Route
-            path="friends/expense/displaytransaction"
-            element={<Display />}
-          ></Route>
-          <Route path="/profile" element={<Profile/>}></Route>
+          <Route path="/" element={<Home />} />
+          <Route path="/signin" element={<Signup />} />
+          <Route path="/dashboard" element={<Dashboard />} />
+          <Route path="/friends" element={<Friends />} />
+          <Route path="/login" element={<Login />} />
+          <Route path="/aboutus" element={<Aboutus />} />
+          <Route path="/analytics" element={<Analytics />} />
+          <Route path="/friends/expense" element={<Expense />} />
+          <Route path="/friends/expense/displaytransaction" element={<Display />} />
+          <Route path="/profile" element={<Profile />} />
         </Routes>
       </BrowserRouter>
     </>

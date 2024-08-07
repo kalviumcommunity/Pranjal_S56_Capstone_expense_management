@@ -42,8 +42,12 @@ function Login() {
           localStorage.setItem("user", loginData.name);
           localStorage.setItem("id", res.data.id);
           localStorage.setItem("profile", res.data.profile);
+          // navigate("/");
           toast.success("Login successful");
           setIsLoggedIn(true);
+          setTimeout(() => {
+          navigate("/");
+          }, 1500);
         } else {
           toast.error("User not found. Please create an account.");
         }
@@ -52,8 +56,7 @@ function Login() {
         console.error(err);
         toast.error("An error occurred. Please try again.");
       });
-      navigate("/");
-  };
+    };
 
   return (
     <>

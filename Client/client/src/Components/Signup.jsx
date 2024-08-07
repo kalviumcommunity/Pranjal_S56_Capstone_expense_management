@@ -1,17 +1,21 @@
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 import logo from "../images/Logo.png";
 import "../Styles/Signup.css";
 import { NavLink, useNavigate } from "react-router-dom";
 import axios from "axios";
 import { toast, ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
+import { GoogleLogin, GoogleLogout } from "react-google-login";
+import { gapi } from "gapi-script";
+
+const clientID = "311238508492-i7o334gljj6h57ped9mdie180691do8e.apps.googleusercontent.com";
 
 function Signup() {
   const [username, setUsername] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [confirmPass, setConfirmPass] = useState("");
-  const [googleAuth, setGoogleAuth] = useState(null)
+  const [isLoggedIn, setIsLoggedIn] = useState(false);
   const navigate = useNavigate();
 
   const handleSubmit = (e) => {
@@ -45,34 +49,27 @@ function Signup() {
     }
   };
 
-  useEffect(() => {
-    const initGoogleSignIn = () => {
-        window.gapi.load('auth2', () => {
-            const auth2 = window.gapi.auth2.init({
-                client_id:'311238508492-i7o334gljj6h57ped9mdie180691do8e.apps.googleusercontent.com',
-                scope: 'email',
-            });
-            setGoogleAuth(auth2); 
-        });
-    };
+  const onSuccess = (res) => {
+    console.log("LOGIN SUCCESS! Current User: ", res.profileObj);
+    toast.success("Google Signup Successful!");
+    setIsLoggedIn(true);
+    
+    setTimeout(() => {
+      
+      navigate("/"); // Navigate to the home page
+    }, 2000);
+  };
 
-    initGoogleSignIn();
-}, []);
+  const onFailure = (res) => {
+    console.log("LOGIN FAILED! res: ", res);
+    toast.error("Google Signup Failed. Please try again.");
+  };
 
-const handleGoogleLogin = async () => {
-    try {
-        const googleUser = await googleAuth.signIn();
-        const profile = googleUser.getBasicProfile();
-        const email = profile.getEmail();
-        console.log('Logged in with Google:', email);
-    } catch (error) {
-        if (error.error === 'popup_closed_by_user') {
-            console.log('Google sign-in popup was closed by the user.');
-        } else {
-            console.error('Google login failed:', error);
-        }
-    }
-};
+  const onLogoutSuccess = () => {
+    setIsLoggedIn(false);
+    toast.success("Logout Successful!");
+    console.log("LOGOUT SUCCESS!");
+  };
 
   return (
     <>
@@ -143,11 +140,25 @@ const handleGoogleLogin = async () => {
             Login
           </NavLink>
         </p>
-        <button className="googlelogin" onClick={handleGoogleLogin}>Sign up with Google</button>
+        {!isLoggedIn ? (
+          <GoogleLogin
+            clientId={clientID}
+            buttonText="Sign up with Google"
+            onSuccess={onSuccess}
+            onFailure={onFailure}
+            cookiePolicy={"single_host_origin"}
+          />
+        ) : (
+          <GoogleLogout
+            clientId={clientID}
+            buttonText="Logout"
+            onLogoutSuccess={onLogoutSuccess}
+          />
+        )}
       </form>
       <ToastContainer
         position="top-center"
-        autoClose={5000}
+        autoClose={1500}
         hideProgressBar={false}
         newestOnTop={false}
         closeOnClick
