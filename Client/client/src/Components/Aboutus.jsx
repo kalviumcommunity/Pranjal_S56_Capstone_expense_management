@@ -7,7 +7,7 @@ import { RiSecurePaymentFill } from "react-icons/ri";
 import { TbReport } from "react-icons/tb";
 import { RiCommunityFill } from "react-icons/ri";
 import Footer from "../Components/Footer";
-import welcomeimg from "../images/welcome.jpg";
+
 
 function Aboutus() {
   return (
@@ -86,6 +86,7 @@ function Aboutus() {
       </ul>
 
       <h2 className="joinus">Join Us Today!</h2>
+
 
       <Footer />
     </Layout>
