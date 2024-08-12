@@ -18,7 +18,7 @@ function Profile() {
     formData.append("image", file);
     const user = localStorage.getItem("id");
     axios
-      .post(`http://localhost:3000/upload/${user}`, formData)
+      .post(`https://pranjal-s56-capstone-expense-management-1.onrender.com/upload/${user}`, formData)
       .then((res) => {
         console.log(res.data);
 

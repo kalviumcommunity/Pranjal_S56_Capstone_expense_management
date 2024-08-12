@@ -35,7 +35,7 @@ function Login() {
       password: password,
     };
     axios
-      .post("http://localhost:3000/login", loginData)
+      .post("https://pranjal-s56-capstone-expense-management-1.onrender.com/login", loginData)
       .then((res) => {
         if (res.data.token) {
           localStorage.setItem("token", res.data.token);
