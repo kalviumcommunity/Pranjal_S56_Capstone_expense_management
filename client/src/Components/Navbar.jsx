@@ -4,7 +4,6 @@ import logo from "../images/Logo.png";
 import "../Styles/Navbar.css";
 import { toast, ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
-import { GoogleLogout } from "react-google-login";
 
 const clientID = "311238508492-i7o334gljj6h57ped9mdie180691do8e.apps.googleusercontent.com"
 function Navbar() {

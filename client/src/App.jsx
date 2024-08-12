@@ -10,21 +10,10 @@ import Display from "./Components/Display";
 import Expense from "./Components/Expense";
 import Profile from "./Components/Profile";
 import { useEffect } from "react";
-import { gapi } from "gapi-script";
 
 const clientID = "311238508492-i7o334gljj6h57ped9mdie180691do8e.apps.googleusercontent.com";
 
 function App() {
-  useEffect(() => {
-    function start() {
-      gapi.client.init({
-        clientId: clientID,
-        scope: "",
-      });
-    }
-
-    gapi.load("client:auth2", start);
-  }, []); 
 
   return (
     <>

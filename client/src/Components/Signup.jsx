@@ -5,8 +5,7 @@ import { NavLink, useNavigate } from "react-router-dom";
 import axios from "axios";
 import { toast, ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
-import { GoogleLogin, GoogleLogout } from "react-google-login";
-import { gapi } from "gapi-script";
+import {GoogleLogin , GoogleOAuthProvider} from "@react-oauth/google"
 
 const clientID = "311238508492-i7o334gljj6h57ped9mdie180691do8e.apps.googleusercontent.com";
 
@@ -140,21 +139,10 @@ function Signup() {
             Login
           </NavLink>
         </p>
-        {!isLoggedIn ? (
-          <GoogleLogin
-            clientId={clientID}
-            buttonText="Sign up with Google"
-            onSuccess={onSuccess}
-            onFailure={onFailure}
-            cookiePolicy={"single_host_origin"}
-          />
-        ) : (
-          <GoogleLogout
-            clientId={clientID}
-            buttonText="Logout"
-            onLogoutSuccess={onLogoutSuccess}
-          />
-        )}
+        <GoogleOAuthProvider clientId={clientID}>
+          <GoogleLogin onSuccess={onSuccess} text="signup_with" />
+        </GoogleOAuthProvider>
+      
       </form>
       <ToastContainer
         position="top-center"
