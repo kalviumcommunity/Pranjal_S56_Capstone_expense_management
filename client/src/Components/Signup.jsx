@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import logo from "../images/Logo.png";
+import logo from "../images/logo.png";
 import "../Styles/Signup.css";
 import { NavLink, useNavigate } from "react-router-dom";
 import axios from "axios";

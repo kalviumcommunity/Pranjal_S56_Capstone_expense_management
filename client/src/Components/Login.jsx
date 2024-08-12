@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import "../Styles/Login.css";
-import logo from "../images/Logo.png";
+import logo from "../images/logo.png";
 import { NavLink, useNavigate } from "react-router-dom";
 import axios from "axios";
 import { toast, ToastContainer } from "react-toastify";

@@ -1,6 +1,6 @@
 import React from "react";
 import { useNavigate, NavLink } from "react-router-dom";
-import logo from "../images/Logo.png";
+import logo from "../images/logo.png";
 import "../Styles/Navbar.css";
 import { toast, ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
