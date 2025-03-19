@@ -10,10 +10,10 @@ The Expense Management Website is a smart tool designed to help users track inco
 **Problem**
 Managing finances can be tedious and unorganized. People often struggle with:
 
-Keeping track of their income and expenses
-Categorizing their spending habits
-Managing shared expenses among friends
-Understanding where their money goes
+- Keeping track of their income and expenses
+- Categorizing their spending habits
+- Managing shared expenses among friends
+- Understanding where their money goes
 
 **Solution**
 The Expense Management Website helps users by:
@@ -26,10 +26,11 @@ This helps users maintain a clear financial record and make informed decisions a
 
 ## 🛠️ Technology Stack
 
-🔹 Frontend: React
-🔹 Backend: Node.js, Express.js
-🔹 Database: MongoDB
+-🔹 Frontend: React
+-🔹 Backend: Node.js, Express.js
+-🔹 Database: MongoDB
 
+---
 
 ![Screenshot 2025-03-19 102449](https://github.com/user-attachments/assets/1ac4f87e-6f1f-46f5-a75d-d529eeb1b6fe)
 
@@ -89,14 +90,14 @@ Backend API: Accessible at:
 ---
 
 **🐞 Troubleshooting**
-Ensure all dependencies are correctly installed.
-Check if the ports are not in conflict with other running services.
-Review terminal logs for any errors.
-You're all set to use Expense Management Website locally! 🚀
+- Ensure all dependencies are correctly installed.
+- Check if the ports are not in conflict with other running services.
+- Review terminal logs for any errors.
+- You're all set to use Expense Management Website locally! 🚀
 
 **🌍 Live Application**
 
-Frontend: [Expense Frontend](https://ifinance.netlify.app/)  
-Backend: [Expense Backend](https://pranjal-s56-capstone-expense-management-2.onrender.com/)
+- Frontend: [Expense Frontend](https://ifinance.netlify.app/)  
+- Backend: [Expense Backend](https://pranjal-s56-capstone-expense-management-2.onrender.com/)
 
 
