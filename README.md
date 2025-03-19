@@ -77,7 +77,7 @@ npm start
 ```sh
 
 cd ../client
-npm start
+npm run dev
 ```
 🌐 Step 4: Access the Application
 
