@@ -1,8 +1,12 @@
 # 📊 Expense Management Website
+
 ## Short Description
+
 The Expense Management Website is a smart tool designed to help users track income, expenses, and financial activities efficiently. It provides an interactive dashboard, expense categorization, and a friends section to manage shared expenses.
+
 ---
 ## Are You Solving a Real-World Problem? ✅
+
 **Problem**
 Managing finances can be tedious and unorganized. People often struggle with:
 
@@ -29,13 +33,15 @@ This helps users maintain a clear financial record and make informed decisions a
 
 
 ## Key Features
+
 ✔ User Authentication: Secure login and logout functionality
 ✔ Income & Expense Tracking: Easily add and view transactions
 ✔ Expense Categorization: Organize spending into categories
 ✔ Friends Section: Share and split expenses with friends
+
 --- 
 
-## 🚀 How to Run the Expense Management Website Locally
+##  How to Run the Expense Management Website Locally
 Follow these steps to set up and run the project on your local system.
 
 📥 Step 1: Clone the Repository
@@ -75,7 +81,9 @@ Frontend: Open your browser and go to:
 🔗 http://localhost:5174
 
 Backend API: Accessible at:
+
 🔗 http://localhost:3000 (or the configured port)
+
 ---
 
 **🐞 Troubleshooting**
@@ -85,8 +93,8 @@ Review terminal logs for any errors.
 You're all set to use Expense Management Website locally! 🚀
 
 **🌍 Live Application**
+
 Frontend: [Expense Frontend](https://ifinance.netlify.app/)  
 Backend: [Expense Backend](https://pranjal-s56-capstone-expense-management-2.onrender.com/)
 
-🎥 Video Demonstration
-📹 Expense Management Video
+
