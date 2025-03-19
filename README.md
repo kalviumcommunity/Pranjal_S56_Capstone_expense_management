@@ -18,10 +18,10 @@ Managing finances can be tedious and unorganized. People often struggle with:
 **Solution**
 The Expense Management Website helps users by:
 
-✅ Tracking income and expenses in one place
-✅ Categorizing transactions for better clarity
-✅ Splitting expenses with friends easily
-✅ Providing an activity log for financial transparency
+- ✅ Tracking income and expenses in one place
+- ✅ Categorizing transactions for better clarity
+- ✅ Splitting expenses with friends easily
+-✅ Providing an activity log for financial transparency
 This helps users maintain a clear financial record and make informed decisions about their spending habits.
 
 ## 🛠️ Technology Stack
@@ -37,10 +37,10 @@ This helps users maintain a clear financial record and make informed decisions a
 
 ## Key Features
 
-✔ User Authentication: Secure login and logout functionality
-✔ Income & Expense Tracking: Easily add and view transactions
-✔ Expense Categorization: Organize spending into categories
-✔ Friends Section: Share and split expenses with friends
+- ✔ User Authentication: Secure login and logout functionality
+- ✔ Income & Expense Tracking: Easily add and view transactions
+- ✔ Expense Categorization: Organize spending into categories
+- ✔ Friends Section: Share and split expenses with friends
 
 --- 
 
