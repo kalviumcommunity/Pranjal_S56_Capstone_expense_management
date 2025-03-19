@@ -80,7 +80,9 @@ cd ../client
 npm start
 ```
 🌐 Step 4: Access the Application
+
 Frontend: Open your browser and go to:
+
 🔗 http://localhost:5174
 
 Backend API: Accessible at:
