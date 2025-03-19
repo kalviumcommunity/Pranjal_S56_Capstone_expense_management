@@ -25,9 +25,11 @@ The Expense Management Website helps users by:
 This helps users maintain a clear financial record and make informed decisions about their spending habits.
 
 ## 🛠️ Technology Stack
-🔹 Frontend: React, Tailwind CSS
+
+🔹 Frontend: React
 🔹 Backend: Node.js, Express.js
 🔹 Database: MongoDB
+
 
 ![Screenshot 2025-03-19 102449](https://github.com/user-attachments/assets/1ac4f87e-6f1f-46f5-a75d-d529eeb1b6fe)
 
