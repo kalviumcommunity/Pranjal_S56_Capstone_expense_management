@@ -8,6 +8,7 @@ The Expense Management Website is a smart tool designed to help users track inco
 ## Are You Solving a Real-World Problem? ✅
 
 **Problem**
+
 Managing finances can be tedious and unorganized. People often struggle with:
 
 - Keeping track of their income and expenses
@@ -16,6 +17,7 @@ Managing finances can be tedious and unorganized. People often struggle with:
 - Understanding where their money goes
 
 **Solution**
+
 The Expense Management Website helps users by:
 
 -  Tracking income and expenses in one place
