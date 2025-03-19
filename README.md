@@ -1,109 +1,92 @@
-# Capstone Project: Expense Management Website  
-
-The **Expense Management Website** is a tool designed to help users track their **income, expenses, and financial activities** efficiently. This web application provides a **user-friendly interface** for personal finance management, offering features like **transaction tracking, expense categorization, and debt management**.  
-
+# 📊 Expense Management Website
+## Short Description
+The Expense Management Website is a smart tool designed to help users track income, expenses, and financial activities efficiently. It provides an interactive dashboard, expense categorization, and a friends section to manage shared expenses.
 ---
+## Are You Solving a Real-World Problem? ✅
+**Problem**
+Managing finances can be tedious and unorganized. People often struggle with:
 
-## 🛠️ Technology Stack  
+Keeping track of their income and expenses
+Categorizing their spending habits
+Managing shared expenses among friends
+Understanding where their money goes
 
-### Frontend:  
-- **React** – For building an interactive and responsive UI.  
+**Solution**
+The Expense Management Website helps users by:
 
-### Backend:  
-- **Node.js & Express.js** – For handling server-side logic and API requests.  
+✅ Tracking income and expenses in one place
+✅ Categorizing transactions for better clarity
+✅ Splitting expenses with friends easily
+✅ Providing an activity log for financial transparency
+This helps users maintain a clear financial record and make informed decisions about their spending habits.
 
-### Database:  
-- **MongoDB** – For storing user data, transactions, and financial records securely.  
+## 🛠️ Technology Stack
+🔹 Frontend: React, Tailwind CSS
+🔹 Backend: Node.js, Express.js
+🔹 Database: MongoDB
 
----
-
-![alt text](<Screenshot 2025-03-19 102449.png>)
+![Screenshot 2025-03-19 102449](https://github.com/user-attachments/assets/1ac4f87e-6f1f-46f5-a75d-d529eeb1b6fe)
 
 
-## Features  
+## Key Features
+✔ User Authentication: Secure login and logout functionality
+✔ Income & Expense Tracking: Easily add and view transactions
+✔ Expense Categorization: Organize spending into categories
+✔ Friends Section: Share and split expenses with friends
+--- 
 
-### 1. **User Authentication**  
-- **Register/Login** – Secure user authentication.  
-- **Logout** – Allows users to log out safely.  
+## 🚀 How to Run the Expense Management Website Locally
+Follow these steps to set up and run the project on your local system.
 
-### 2. **Expense Management**  
-- **Income & Transactions** – Users can record income and expenses.  
-- **Categorization** – Organize transactions for better financial tracking.  
-- **Amount Tracking** – Provides an overview of income and expenses.  
-
-### 3. **Activity Log**  
-- **Activity Tracking** – Logs all user activities.  
-- **Historical Data** – Enables users to review past transactions.  
-
-### 4. **Friends Section**  
-- **Expense Sharing** – Facilitates splitting expenses among friends.  
-- **Contribution Calculation** – Calculates individual shares in shared expenses.  
-- **Debt Management** – Keeps track of money owed or lent.  
-
----
-
-## Future Enhancements  
-
-### 1. **Data Visualization**  
-- Implement **graphs and charts** for a better financial overview.  
-
-### 2. **Budgeting Tools**  
-- Introduce **budgeting features** to help users plan expenses.  
-
-### 3. **Notification System**  
-- Notify users about **upcoming bills and due payments**.  
-
-### 4. **Mobile Application**  
-- Develop a **mobile app** for managing expenses on the go.  
-
----
-
-## Deployment Links  
-
-### Backend:  
-- [Expense Management Backend](https://pranjal-s56-capstone-expense-management-2.onrender.com)  
-
-### Frontend:  
-- [Expense Management Frontend](https://ifinance.netlify.app/)  
-
----
-
-## Local Setup Guide  
-
-### Prerequisites  
-Ensure the following are installed:  
-- **Node.js** and **npm**  
-- **MongoDB** (running locally)  
-
-### Setup Steps  
-
-#### 1️⃣ Clone the Repository  
+📥 Step 1: Clone the Repository
 ```sh
 git clone https://github.com/kalviumcommunity/Pranjal_S56_Capstone_expense_management.git
 cd expense-management-website
-2️⃣ Install Dependencies
-sh
-Copy
-Edit
+```
+
+⚙ Step 2: Install Dependencies
+Navigate to the backend directory and install dependencies:
+
+```sh
 cd backend
 npm install
+```
+Navigate to the frontend directory and install dependencies:
+```sh
 cd ../client
 npm install
-3️⃣ Set Up the Database
-Ensure MongoDB is running locally.
-Create a new database named expense_management.
-Update the MongoDB connection URL in Server/config/db.js if needed.
-4️⃣ Start the Backend Server
-sh
-Copy
-Edit
-cd backend
+```
+▶ Step 3: Run the Frontend and Backend Servers
+1️⃣ Run the Backend Server:
+
+```sh
+cd ../backend
 npm start
-5️⃣ Start the Frontend Development Server
-sh
-Copy
-Edit
-cd client
+```
+2️⃣ Run the Frontend Server:
+
+```sh
+
+cd ../client
 npm start
-6️⃣ Access the Website
-Open http://localhost:3000 in your browser.
+```
+🌐 Step 4: Access the Application
+Frontend: Open your browser and go to:
+🔗 http://localhost:5174
+
+Backend API: Accessible at:
+🔗 http://localhost:3000 (or the configured port)
+---
+
+**🐞 Troubleshooting**
+Ensure all dependencies are correctly installed.
+Check if the ports are not in conflict with other running services.
+Review terminal logs for any errors.
+You're all set to use Expense Management Website locally! 🚀
+
+**🌍 Live Application**
+Frontend: [Expense Frontend](https://ifinance.netlify.app/)  
+Backend: [Expense Backend](https://pranjal-s56-capstone-expense-management-2.onrender.com/)
+
+🎥 Video Demonstration
+📹 Expense Management Video
