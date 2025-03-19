@@ -21,14 +21,14 @@ The Expense Management Website helps users by:
 - ✅ Tracking income and expenses in one place
 - ✅ Categorizing transactions for better clarity
 - ✅ Splitting expenses with friends easily
--✅ Providing an activity log for financial transparency
+- ✅ Providing an activity log for financial transparency
 This helps users maintain a clear financial record and make informed decisions about their spending habits.
 
 ## 🛠️ Technology Stack
 
--🔹 Frontend: React
--🔹 Backend: Node.js, Express.js
--🔹 Database: MongoDB
+🔹 Frontend: React
+🔹 Backend: Node.js, Express.js
+🔹 Database: MongoDB
 
 ---
 
