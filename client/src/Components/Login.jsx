@@ -88,6 +88,7 @@ function Login() {
               <input
                 required
                 className="w-full px-5 py-4 rounded-xl bg-white/5 border border-white/10 text-white placeholder-gray-500 focus:border-indigo-400 focus:bg-white/10 outline-none transition-all duration-300"
+                autoComplete="off"
                 type="text"
                 placeholder="Enter your username"
                 value={username}
@@ -103,6 +104,7 @@ function Login() {
               <input
                 required
                 className="w-full px-5 py-4 rounded-xl bg-white/5 border border-white/10 text-white placeholder-gray-500 focus:border-indigo-400 focus:bg-white/10 outline-none transition-all duration-300"
+                autoComplete="new-password"
                 type="password"
                 placeholder="Enter your password"
                 value={password}

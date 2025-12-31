@@ -5,10 +5,12 @@ import { MdMobileFriendly } from "react-icons/md";
 import { RiSecurePaymentFill } from "react-icons/ri";
 import { TbReport } from "react-icons/tb";
 import { RiCommunityFill } from "react-icons/ri";
+import { useNavigate } from "react-router-dom";
 import Footer from "../Components/Footer";
 
 
 function Aboutus() {
+  const navigate = useNavigate();
   return (
     <Layout>
       <div className="bg-gradient-to-br from-gray-50 to-white py-16 px-4">
@@ -124,7 +126,10 @@ function Aboutus() {
           <div className="bg-gradient-to-r from-primary-500 to-secondary-500 rounded-2xl shadow-2xl p-12 text-center">
             <h2 className="text-4xl font-bold text-black mb-4">Join Us Today!</h2>
             <p className="text-black/90 text-lg mb-6">Start your journey to better financial management</p>
-            <button className="px-8 py-4 rounded-lg font-bold text-primary-600 bg-white hover:bg-gray-100 transition-all duration-300 shadow-lg hover:shadow-xl transform hover:-translate-y-1">
+            <button
+              onClick={() => navigate("/login")}
+              className="px-8 py-4 rounded-lg font-bold text-primary-600 bg-white hover:bg-gray-100 transition-all duration-300 shadow-lg hover:shadow-xl transform hover:-translate-y-1"
+            >
               Get Started
             </button>
           </div>

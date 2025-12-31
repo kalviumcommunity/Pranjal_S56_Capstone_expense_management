@@ -36,9 +36,13 @@ function Friends() {
   }, []);
 
   const addNewFriends = async () => {
+    const user = localStorage.getItem("id");
+    if (!user) {
+      alert("Please login to add friends");
+      return;
+    }
     if (friend) {
       try {
-        const user = localStorage.getItem("id");
         const response = await axios.post(`${API_URL}/addfriends/${user}`, { name: friend });
         setFriendsList([...friendsList, response.data]);
         setFriend('');
@@ -49,8 +53,12 @@ function Friends() {
   };
 
   const deleteFriend = async (id) => {
+    const user = localStorage.getItem("id");
+    if (!user) {
+      alert("Please login to delete friends");
+      return;
+    }
     try {
-      const user = localStorage.getItem("id");
       await axios.delete(`${API_URL}/deletefriend/${id}/${user}`);
       setFriendsList(friendsList.filter((friend) => friend.name !== id));
     } catch (err) {
@@ -65,9 +73,13 @@ function Friends() {
   };
 
   const saveEditFriend = async () => {
+    const user = localStorage.getItem("id");
+    if (!user) {
+      alert("Please login to save changes");
+      return;
+    }
     try {
       if (editFriendName != "") {
-        const user = localStorage.getItem("id");
         const response = await axios.put(`${API_URL}/updatefriend/${currentFriendId}/${user}`, { name: editFriendName });
         setFriendsList(friendsList.map(friend => (friend.name === currentFriendId ? { "name": response.data } : friend)));
         setEditMode(false);

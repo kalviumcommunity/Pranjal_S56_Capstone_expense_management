@@ -35,11 +35,15 @@ function Expense({ friendsList }) {
   }
 
   const handleAddExpense = async () => {
+    const user = localStorage.getItem("id");
+    if (!user) {
+      alert("Please login to add expenses");
+      return;
+    }
     if (!selectedFriend || !amount) {
       alert("Please select a friend and enter an amount.");
     } else {
       try {
-        let user = localStorage.getItem("id");
 
         const res = await axios.post(`${API_URL}/addexpense/${user}`, newExpense);
         setFriends(res.data);
@@ -54,10 +58,14 @@ function Expense({ friendsList }) {
   };
 
   const deleteExpense = async (i, j) => {
+    const user = localStorage.getItem("id");
+    if (!user) {
+      alert("Please login to delete expenses");
+      return;
+    }
     try {
       const confirmed = window.confirm("Are you Sure?");
       if (confirmed) {
-        let user = localStorage.getItem("id");
         const res = await axios.delete(`${API_URL}/friendexpense/${i}/${user}/${j}`);
         setFriends(res.data);
       }
@@ -81,6 +89,10 @@ function Expense({ friendsList }) {
 
   const handleOk = () => {
     const userid = localStorage.getItem("id")
+    if (!userid) {
+      alert("Please login to save changes");
+      return;
+    }
     axios.put(`${API_URL}/updateexpense/${userid}`, {
       friendIndex: currentExpense.friendIndex,
       expenseId: currentExpense.expenseId,

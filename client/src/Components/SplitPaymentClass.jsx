@@ -30,7 +30,7 @@ class SplitPaymentCalcClass {
             for (let i = 0, len = bins.length; i < len; i++) {
                 const bin = bins[i];
 
-                if (+bin.amount.toFixed(1) >= +itemAmount.toFixed(1)) {
+                if (bin.amount >= itemAmount - 0.01) {
                     bin.amount -= itemAmount;
                     result.push({
                         id: generateTxnId(item.friend.name, bin.friend.name, itemAmount.toFixed(2)),
@@ -48,7 +48,7 @@ class SplitPaymentCalcClass {
 
                 let amount;
 
-                if (+itemAmount.toFixed(1) >= +bin.amount.toFixed(1)) {
+                if (itemAmount >= bin.amount - 0.01) {
                     itemAmount -= bin.amount;
                     amount = bin.amount;
                 } else {

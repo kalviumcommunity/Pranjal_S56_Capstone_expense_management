@@ -47,7 +47,7 @@ const Display = () => {
       const expensesData = friendsData.map(friend => {
         const totalExpense = friend.expenses.reduce((sum, exp) => sum + parseFloat(exp.amount), 0);
         return { amount: totalExpense, friend: { id: friend.name, name: friend.name } };
-      }).filter(exp => exp.amount > 0);
+      });
 
       setExpenses(expensesData);
     } catch (error) {

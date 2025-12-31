@@ -26,10 +26,19 @@ function Dashboard() {
   const [form] = Form.useForm();
 
   const handleEdit = (record) => {
+    if (!localStorage.getItem("id")) {
+      message.error("Please login to edit transactions");
+      return;
+    }
     setEditableRow(record.key);
   };
 
   const handleSave = async (record) => {
+    const user = localStorage.getItem("id");
+    if (!user) {
+      message.error("Please login to save changes");
+      return;
+    }
     try {
       const updatedTransaction = { ...record };
       setLoading(true);
@@ -50,6 +59,10 @@ function Dashboard() {
   };
 
   const handleDelete = (record) => {
+    if (!localStorage.getItem("id")) {
+      message.error("Please login to delete transactions");
+      return;
+    }
     Modal.confirm({
       title: "Confirm Deletion",
       content: "Are you sure you want to delete this transaction?",
@@ -241,8 +254,12 @@ function Dashboard() {
   }
 
   const handleSubmit = async (values) => {
+    const user = localStorage.getItem("id");
+    if (!user) {
+      message.error("Please login to add transactions");
+      return;
+    }
     try {
-      const user = localStorage.getItem("id");
       setLoading(true);
 
       // Save to MongoDB
@@ -339,16 +356,19 @@ function Dashboard() {
           {/* Content */}
           <div className="bg-white rounded-2xl shadow-lg overflow-hidden border border-gray-100">
             {activeComponent === "table" ? (
-              <Table
-                columns={columns}
-                dataSource={filteredData}
-                className="custom-table"
-                pagination={{
-                  pageSize: 10,
-                  showSizeChanger: true,
-                  showTotal: (total) => `Total ${total} transactions`,
-                }}
-              />
+              <div className="overflow-x-auto">
+                <Table
+                  columns={columns}
+                  dataSource={filteredData}
+                  className="custom-table"
+                  scroll={{ x: 'max-content' }}
+                  pagination={{
+                    pageSize: 10,
+                    showSizeChanger: true,
+                    showTotal: (total) => `Total ${total} transactions`,
+                  }}
+                />
+              </div>
             ) : (
               <Analytics transactions={transactions} />
             )}

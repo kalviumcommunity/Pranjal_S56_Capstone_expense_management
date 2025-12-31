@@ -108,6 +108,7 @@ function Signup() {
               <input
                 required
                 className="w-full px-5 py-3.5 rounded-xl bg-white/5 border border-white/10 text-white placeholder-gray-500 focus:border-indigo-400 focus:bg-white/10 outline-none transition-all duration-300"
+                autoComplete="off"
                 type="text"
                 placeholder="Enter your name"
                 value={username}
@@ -123,6 +124,7 @@ function Signup() {
               <input
                 required
                 className="w-full px-5 py-3.5 rounded-xl bg-white/5 border border-white/10 text-white placeholder-gray-500 focus:border-indigo-400 focus:bg-white/10 outline-none transition-all duration-300"
+                autoComplete="off"
                 type="email"
                 placeholder="Enter valid Email Id"
                 value={email}
@@ -138,6 +140,7 @@ function Signup() {
               <input
                 required
                 className="w-full px-5 py-3.5 rounded-xl bg-white/5 border border-white/10 text-white placeholder-gray-500 focus:border-indigo-400 focus:bg-white/10 outline-none transition-all duration-300"
+                autoComplete="new-password"
                 type="password"
                 placeholder="Enter your password"
                 value={password}
@@ -153,6 +156,7 @@ function Signup() {
               <input
                 required
                 className="w-full px-5 py-3.5 rounded-xl bg-white/5 border border-white/10 text-white placeholder-gray-500 focus:border-indigo-400 focus:bg-white/10 outline-none transition-all duration-300"
+                autoComplete="new-password"
                 type="password"
                 placeholder="Confirm password"
                 value={confirmPass}
