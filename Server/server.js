@@ -6,7 +6,7 @@ const { userModel } = require("./models/model");
 const bcrypt = require("bcrypt");
 const jwt = require("jsonwebtoken");
 // const {ProtectedRoute} = require("./Controllers/ProtectedRoute.js")
-const {upload} = require("./multer.js")
+const { upload } = require("./multer.js")
 const cloudinary = require("./cloudinary.js")
 
 const app = express();
@@ -47,38 +47,40 @@ app.get("/friends/:user", async (req, res) => {
 
 app.post("/addfriends/:user", async (req, res) => {
   const data = req.body;
-  let newObj = {...data , expenses: []}
+  let newObj = { ...data, expenses: [] }
   let user = req.params.user;
   try {
     await userModel.updateOne({ _id: user }, { $push: { friends: newObj } });
-    
+
     res.status(201).json(data);
   } catch (err) {
     res.status(500).send(err.message);
   }
 });
 
-app.post("/addexpense/:id", async(req, res) => {
+app.post("/addexpense/:id", async (req, res) => {
   const data = req.body;
-  let userid = req.params.id
-  
-  try {
-    let user = await userModel.findOne({_id : userid})
-    let newId;
-    if (user.friends[data.id].expenses.length==0){
-      newId = 1
-    }
-    else{
+  const userid = req.params.id;
 
-      newId = user.friends[data.id].expenses[user.friends[data.id].expenses.length-1].expenseid + 1
+  try {
+    const user = await userModel.findOne({ _id: userid });
+    if (!user) return res.status(404).send("User not found");
+
+    const friendIndex = data.id;
+    if (friendIndex < 0 || friendIndex >= user.friends.length) {
+      return res.status(400).send("Invalid friend index");
     }
-    await userModel.updateOne(
+
+    const expenses = user.friends[friendIndex].expenses || [];
+    const newId = expenses.length === 0 ? 1 : expenses[expenses.length - 1].expenseid + 1;
+
+    const updatedUser = await userModel.findOneAndUpdate(
       { _id: userid },
-      { $push: { [`friends.${data.id}.expenses`]: {expenseid: newId , amount: data.amount , reason: data.reason} } }
+      { $push: { [`friends.${friendIndex}.expenses`]: { expenseid: newId, amount: data.amount, reason: data.reason } } },
+      { new: true }
     );
-    user = await userModel.findOne({_id : userid})
-    console.log(user.friends[data.id].expenses)
-    res.status(200).json(user.friends); 
+
+    res.status(200).json(updatedUser.friends);
   } catch (err) {
     console.error(err);
     res.status(500).send("An error occurred");
@@ -87,15 +89,9 @@ app.post("/addexpense/:id", async(req, res) => {
 
 app.get("/getFriends/:userid", async (req, res) => {
   try {
-    let userid = req.params.userid;
-    console.log(userid);
-    
-    let user = await userModel.findOne({ _id: userid });
-    
-    if (!user) {
-      return res.status(404).send("User not found");
-    }
-
+    const userid = req.params.userid;
+    const user = await userModel.findOne({ _id: userid });
+    if (!user) return res.status(404).send("User not found");
     res.status(200).json(user.friends);
   } catch (err) {
     console.error(err);
@@ -107,10 +103,7 @@ app.delete("/friendexpense/:id/:userid/:expenseid", async (req, res) => {
   try {
     let id = req.params.id;
     let userid = req.params.userid;
-    console.log(req.params.expenseid)
-    let expid = parseInt(req.params.expenseid, 10); 
-
-    console.log(id , userid , expid)
+    let expid = parseInt(req.params.expenseid, 10);
 
     let user = await userModel.findOne({ _id: userid });
     if (!user) {
@@ -121,17 +114,14 @@ app.delete("/friendexpense/:id/:userid/:expenseid", async (req, res) => {
       return res.status(400).send("Invalid friend index");
     }
 
-    
-    await userModel.updateOne(
+
+    const updatedUser = await userModel.findOneAndUpdate(
       { _id: userid },
-      { $pull: { [`friends.${id}.expenses`]: { expenseid: expid } } }
+      { $pull: { [`friends.${id}.expenses`]: { expenseid: expid } } },
+      { new: true }
     );
 
-   
-    let updatedUser = await userModel.findOne({ _id: userid });
-    console.log(updatedUser.friends[id].expenses);
-
-    res.status(200).send("Expense deleted successfully");
+    res.status(200).json(updatedUser.friends);
   } catch (err) {
     console.error(err);
     res.status(500).send("An error occurred");
@@ -145,9 +135,9 @@ app.put("/updateexpense/:userid", async (req, res) => {
     let userid = req.params.userid;
     let expid = req.body.expenseId;
     let updatedExpense = {
-      expenseid : expid,
-      amount : req.body.newAmount,
-      reason : req.body.newReason
+      expenseid: expid,
+      amount: req.body.newAmount,
+      reason: req.body.newReason
     };
     console.log(updatedExpense)
 
@@ -165,8 +155,6 @@ app.put("/updateexpense/:userid", async (req, res) => {
       { _id: userid, [`${expensePath}.expenseid`]: expid },
       { $set: { [`${expensePath}.$`]: updatedExpense } }
     );
-    let updatedUser = await userModel.findOne({ _id: userid });
-    console.log(updatedUser.friends[id].expenses);
 
     res.status(200).send("Expense updated successfully");
   } catch (err) {
@@ -175,9 +163,40 @@ app.put("/updateexpense/:userid", async (req, res) => {
   }
 });
 
-app.post('/upload/:userid', upload.single('image'),  async (req, res) => {
+app.get("/userProfile/:userid", async (req, res) => {
+  try {
+    const userid = req.params.userid;
+    const user = await userModel.findById(userid);
+    if (!user) return res.status(404).send("User not found");
+    res.status(200).json({
+      name: user.name,
+      profileImg: user.profileImg || "https://via.placeholder.com/150",
+      email: user.email
+    });
+  } catch (err) {
+    res.status(500).send(err.message);
+  }
+});
+
+app.put("/updateProfile/:userid", async (req, res) => {
+  try {
+    const userid = req.params.userid;
+    const { name } = req.body;
+    const user = await userModel.findByIdAndUpdate(
+      userid,
+      { name },
+      { new: true }
+    );
+    if (!user) return res.status(404).send("User not found");
+    res.status(200).json({ name: user.name, message: "Profile updated successfully" });
+  } catch (err) {
+    res.status(500).send(err.message);
+  }
+});
+
+app.post('/upload/:userid', upload.single('image'), async (req, res) => {
   let userid = req.params.userid;
-  
+
   try {
     const result = await cloudinary.uploader.upload(req.file.path);
     await userModel.findOneAndUpdate({ _id: userid }, { profileImg: result.url });
@@ -217,15 +236,14 @@ app.put("/updatefriend/:friendName/:userId", async (req, res) => {
       return res.status(404).send("User not found");
     }
 
-    for (friend in user.friends){
-      if(user.friends[friend].name == friendName){
+    for (let friend in user.friends) {
+      if (user.friends[friend].name == friendName) {
         user.friends[friend].name = newName
         break
       }
     }
-    
-    const newuser = await userModel.findByIdAndUpdate({_id: userId} , user)
 
+    const newuser = await userModel.findByIdAndUpdate({ _id: userId }, user)
     res.status(200).send(newName);
   } catch (err) {
     console.error("Error updating friend:", err);
@@ -272,7 +290,8 @@ app.post("/login", async (req, res) => {
         token: token,
         message: "You logged in successfully!",
         id: user._id,
-        profile: user.profile
+        user: user.name,
+        profileImg: user.profileImg || "https://via.placeholder.com/150"
       });
     } else {
       res.status(401).send("Incorrect password");
@@ -288,8 +307,7 @@ app.put("/updateTransaction/:id", async (req, res) => {
     await TransactionModel.updateOne({ _id: id }, body);
     res.send({ message: "Updated!" });
   } catch (err) {
-    res.send(err);
-    console.log(err);
+    res.status(500).send(err);
   }
 });
 
@@ -308,9 +326,39 @@ app.delete("/deleteTransaction/:id", async (req, res) => {
   }
 });
 
+app.get("/settledTransactions/:userId", async (req, res) => {
+  try {
+    const user = await userModel.findById(req.params.userId);
+    if (!user) return res.status(404).send("User not found");
+    res.json(user.settledTransactions || []);
+  } catch (error) {
+    res.status(500).send(error.message);
+  }
+});
+
+app.post("/toggleSettlement/:userId", async (req, res) => {
+  const { transactionId } = req.body;
+  try {
+    const user = await userModel.findById(req.params.userId);
+    if (!user) return res.status(404).send("User not found");
+
+    const index = user.settledTransactions.indexOf(transactionId);
+    if (index === -1) {
+      user.settledTransactions.push(transactionId);
+    } else {
+      user.settledTransactions.splice(index, 1);
+    }
+
+    await user.save();
+    res.json(user.settledTransactions);
+  } catch (error) {
+    res.status(500).send(error.message);
+  }
+});
+
 app.listen(port, () => {
   connected();
-  console.log(`🚀 server running on PORT: ${port}`);
+  console.log(`server running on PORT: ${port}`);
 });
 
 module.exports = app;

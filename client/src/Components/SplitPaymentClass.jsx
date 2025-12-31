@@ -1,7 +1,5 @@
-let lastId = 0;
-
-const randomId = () => {
-    return Math.floor(Math.random() * 1000) + ++lastId;
+const generateTxnId = (from, to, amount) => {
+    return `${from}_${to}_${amount}`.replace(/\s+/g, '_');
 };
 
 class SplitPaymentCalcClass {
@@ -17,7 +15,7 @@ class SplitPaymentCalcClass {
             const bin = bins[0];
 
             return items.map((item) => ({
-                id: randomId(),
+                id: generateTxnId(item.friend.name, bin.friend.name, item.amount.toFixed(2)),
                 from_friend: item.friend,
                 to_friend: bin.friend,
                 amount: item.amount.toFixed(2),
@@ -35,7 +33,7 @@ class SplitPaymentCalcClass {
                 if (+bin.amount.toFixed(1) >= +itemAmount.toFixed(1)) {
                     bin.amount -= itemAmount;
                     result.push({
-                        id: randomId(),
+                        id: generateTxnId(item.friend.name, bin.friend.name, itemAmount.toFixed(2)),
                         from_friend: item.friend,
                         to_friend: bin.friend,
                         amount: itemAmount.toFixed(2),
@@ -59,7 +57,7 @@ class SplitPaymentCalcClass {
                 }
 
                 result.push({
-                    id: randomId(),
+                    id: generateTxnId(item.friend.name, bin.friend.name, amount.toFixed(2)),
                     from_friend: item.friend,
                     to_friend: bin.friend,
                     amount: amount.toFixed(2),

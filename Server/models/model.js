@@ -18,8 +18,12 @@ const userSchema = new mongoose.Schema({
     type: Array,
     default: [],
   },
-  profile : {
+  profileImg: {
     type: String
+  },
+  settledTransactions: {
+    type: [String],
+    default: []
   }
 });
 
