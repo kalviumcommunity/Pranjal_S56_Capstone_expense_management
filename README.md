@@ -88,7 +88,7 @@ npm run dev
 
 **🌍 Live Application**
 
-- **Frontend**: [iFinance Live](https://ifinance.netlify.app/)  
+- **Frontend**: [iFinance Live](https://pranjal-s56-capstone-expense-tracker-d0ux.onrender.com/)  
 - **Backend API**: [Production Server (Render)](https://pranjal-s56-capstone-expense-tracker.onrender.com)
 
 ---
@@ -99,5 +99,6 @@ npm run dev
 - Run `npm run build` if you encounter unexpected frontend issues.
 
 Developed with ❤️ for better financial clarity. 🚀
+
 
 
