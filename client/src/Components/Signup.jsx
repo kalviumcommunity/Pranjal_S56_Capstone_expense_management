@@ -3,6 +3,7 @@ import { NavLink, useNavigate } from "react-router-dom";
 import axios from "axios";
 import { toast, ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
+import API_URL from "../config";
 import { GoogleLogin, GoogleOAuthProvider } from "@react-oauth/google"
 
 const clientID = "311238508492-i7o334gljj6h57ped9mdie180691do8e.apps.googleusercontent.com";
@@ -34,7 +35,7 @@ function Signup() {
       };
 
       axios
-        .post("http://localhost:3000/register", userData)
+        .post(`${API_URL}/register`, userData)
         .then((res) => {
           toast.success(res.data);
           navigate("/");

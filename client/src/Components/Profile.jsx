@@ -3,6 +3,7 @@ import axios from "axios";
 import Navbar from "./Navbar";
 import { toast, ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
+import API_URL from "../config";
 
 function Profile() {
   const [userData, setUserData] = useState({ name: "", profileImg: "" });
@@ -15,7 +16,7 @@ function Profile() {
   const fetchProfile = async () => {
     try {
       const user = localStorage.getItem("id");
-      const res = await axios.get(`http://localhost:3000/userProfile/${user}`);
+      const res = await axios.get(`${API_URL}/userProfile/${user}`);
       setUserData(res.data);
       setNewName(res.data.name);
     } catch (err) {
@@ -32,7 +33,7 @@ function Profile() {
     formData.append("image", file);
     const user = localStorage.getItem("id");
     axios
-      .post(`http://localhost:3000/upload/${user}`, formData)
+      .post(`${API_URL}/upload/${user}`, formData)
       .then((res) => {
         setUserData({ ...userData, profileImg: res.data.url });
         localStorage.setItem("profile", res.data.url);
@@ -64,7 +65,7 @@ function Profile() {
 
     try {
       const user = localStorage.getItem("id");
-      const res = await axios.put(`http://localhost:3000/updateProfile/${user}`, { name: newName });
+      const res = await axios.put(`${API_URL}/updateProfile/${user}`, { name: newName });
       localStorage.setItem("user", res.data.name);
       toast.success("Profile updated successfully!");
     } catch (err) {

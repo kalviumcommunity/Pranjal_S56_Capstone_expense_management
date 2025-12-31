@@ -4,6 +4,7 @@ import axios from "axios";
 import { toast, ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { GoogleLogin, GoogleOAuthProvider } from "@react-oauth/google";
+import API_URL from "../config";
 
 const clientID = "311238508492-i7o334gljj6h57ped9mdie180691do8e.apps.googleusercontent.com";
 
@@ -20,7 +21,7 @@ function Login() {
     };
 
     axios
-      .post("http://localhost:3000/login", userData)
+      .post(`${API_URL}/login`, userData)
       .then((res) => {
         toast.success(res.data.message);
         localStorage.setItem("token", res.data.token);

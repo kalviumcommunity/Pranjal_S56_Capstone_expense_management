@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import SplitPaymentCalcClass from './SplitPaymentClass';
+import API_URL from '../config';
 
 const Display = () => {
   const [friends, setFriends] = useState([]);
@@ -16,7 +17,7 @@ const Display = () => {
   const fetchSettledTransactions = async () => {
     const userId = localStorage.getItem("id");
     try {
-      const response = await axios.get(`http://localhost:3000/settledTransactions/${userId}`);
+      const response = await axios.get(`${API_URL}/settledTransactions/${userId}`);
       const settledIds = response.data;
       const settledMap = {};
       settledIds.forEach(id => {
@@ -39,7 +40,7 @@ const Display = () => {
   const getFriends = async () => {
     let user = localStorage.getItem("id");
     try {
-      const response = await axios.get(`http://localhost:3000/getFriends/${user}`);
+      const response = await axios.get(`${API_URL}/getFriends/${user}`);
       const friendsData = response.data;
       setFriends(friendsData);
 
@@ -63,7 +64,7 @@ const Display = () => {
         [id]: !prevState[id]
       }));
 
-      await axios.post(`http://localhost:3000/toggleSettlement/${userId}`, { transactionId: id });
+      await axios.post(`${API_URL}/toggleSettlement/${userId}`, { transactionId: id });
     } catch (error) {
       console.error('Error toggling settlement:', error);
       // Revert on error

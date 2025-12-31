@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
 import { Modal, Button, Input } from "antd";
+import API_URL from '../config';
 
 function Expense({ friendsList }) {
   const [friends, setFriends] = useState([]);
@@ -27,7 +28,7 @@ function Expense({ friendsList }) {
 
   const getFriends = async () => {
     let user = localStorage.getItem("id");
-    await axios.get(`http://localhost:3000/getFriends/${user}`)
+    await axios.get(`${API_URL}/getFriends/${user}`)
       .then((res) => {
         setFriends(res.data);
       });
@@ -40,7 +41,7 @@ function Expense({ friendsList }) {
       try {
         let user = localStorage.getItem("id");
 
-        const res = await axios.post(`http://localhost:3000/addexpense/${user}`, newExpense);
+        const res = await axios.post(`${API_URL}/addexpense/${user}`, newExpense);
         setFriends(res.data);
         setSelectedFriend('');
         setAmount('');
@@ -57,7 +58,7 @@ function Expense({ friendsList }) {
       const confirmed = window.confirm("Are you Sure?");
       if (confirmed) {
         let user = localStorage.getItem("id");
-        const res = await axios.delete(`http://localhost:3000/friendexpense/${i}/${user}/${j}`);
+        const res = await axios.delete(`${API_URL}/friendexpense/${i}/${user}/${j}`);
         setFriends(res.data);
       }
     } catch (error) {
@@ -80,7 +81,7 @@ function Expense({ friendsList }) {
 
   const handleOk = () => {
     const userid = localStorage.getItem("id")
-    axios.put(`http://localhost:3000/updateexpense/${userid}`, {
+    axios.put(`${API_URL}/updateexpense/${userid}`, {
       friendIndex: currentExpense.friendIndex,
       expenseId: currentExpense.expenseId,
       newAmount: amount,

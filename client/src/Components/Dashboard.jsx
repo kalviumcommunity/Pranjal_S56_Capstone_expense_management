@@ -9,6 +9,7 @@ import { AiOutlineUnorderedList } from "react-icons/ai";
 import { FaChartArea } from "react-icons/fa";
 import { MdDelete } from "react-icons/md";
 import { MdModeEditOutline } from "react-icons/md";
+import API_URL from "../config";
 import { BiSolidSave } from "react-icons/bi";
 import Analytics from "./Analytics";
 
@@ -35,7 +36,7 @@ function Dashboard() {
 
       // Make PUT request to update transaction
       await axios.put(
-        `http://localhost:3000/updateTransaction/${record._id}`,
+        `${API_URL}/updateTransaction/${record._id}`,
         updatedTransaction
       );
       setLoading(false);
@@ -66,7 +67,7 @@ function Dashboard() {
       setLoading(true);
       // Make DELETE request to delete transaction
       await axios.delete(
-        `http://localhost:3000/deleteTransaction/${record._id}`
+        `${API_URL}/deleteTransaction/${record._id}`
       );
       setLoading(false);
       message.success("Transaction deleted successfully");
@@ -194,7 +195,7 @@ function Dashboard() {
     try {
       const user = localStorage.getItem("id");
       const res = await axios.get(
-        `http://localhost:3000/getTransaction/${user}`
+        `${API_URL}/getTransaction/${user}`
       );
       setTransactions(res.data);
     } catch (err) {
@@ -245,7 +246,7 @@ function Dashboard() {
       setLoading(true);
 
       // Save to MongoDB
-      await axios.post("http://localhost:3000/addTransaction", {
+      await axios.post(`${API_URL}/addTransaction`, {
         data: values,
         id: user,
       });

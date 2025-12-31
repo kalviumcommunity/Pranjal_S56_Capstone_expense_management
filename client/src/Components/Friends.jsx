@@ -7,6 +7,7 @@ import FrndsNavbar from './FrndsNavbar';
 import axios from 'axios';
 import Expense from './Expense';
 import Display from './Display';
+import API_URL from '../config';
 
 function Friends() {
   const [friend, setFriend] = useState('');
@@ -23,7 +24,7 @@ function Friends() {
       try {
         const user = localStorage.getItem("id");
         const response = await axios.get(
-          `http://localhost:3000/friends/${user}`
+          `${API_URL}/friends/${user}`
         );
         setFriendsList(response.data.friends);
       } catch (err) {
@@ -38,7 +39,7 @@ function Friends() {
     if (friend) {
       try {
         const user = localStorage.getItem("id");
-        const response = await axios.post(`http://localhost:3000/addfriends/${user}`, { name: friend });
+        const response = await axios.post(`${API_URL}/addfriends/${user}`, { name: friend });
         setFriendsList([...friendsList, response.data]);
         setFriend('');
       } catch (err) {
@@ -50,7 +51,7 @@ function Friends() {
   const deleteFriend = async (id) => {
     try {
       const user = localStorage.getItem("id");
-      await axios.delete(`http://localhost:3000/deletefriend/${id}/${user}`);
+      await axios.delete(`${API_URL}/deletefriend/${id}/${user}`);
       setFriendsList(friendsList.filter((friend) => friend.name !== id));
     } catch (err) {
       console.error(err);
@@ -67,7 +68,7 @@ function Friends() {
     try {
       if (editFriendName != "") {
         const user = localStorage.getItem("id");
-        const response = await axios.put(`http://localhost:3000/updatefriend/${currentFriendId}/${user}`, { name: editFriendName });
+        const response = await axios.put(`${API_URL}/updatefriend/${currentFriendId}/${user}`, { name: editFriendName });
         setFriendsList(friendsList.map(friend => (friend.name === currentFriendId ? { "name": response.data } : friend)));
         setEditMode(false);
         setCurrentFriendId(null);
