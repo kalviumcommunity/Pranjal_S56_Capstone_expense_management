@@ -1,107 +1,104 @@
-# 📊 Expense Management Website
+# 📊 iFinance - Expense Management
+![iFinance Preview](preview.png)
 
 ## Short Description
 
-The Expense Management Website is a smart tool designed to help users track income, expenses, and financial activities efficiently. It provides an interactive dashboard, expense categorization, and a friends section to manage shared expenses.
+iFinance is a smart, premium tool designed to help users track income, expenses, and financial activities efficiently. It provides an interactive dashboard, expense analytics, and a powerful friends section to manage and split shared expenses seamlessly.
 
 ---
 ## Are You Solving a Real-World Problem? ✅
 
 **Problem**
 
-Managing finances can be tedious and unorganized. People often struggle with:
+Managing group and personal finances can be tedious. People often struggle with:
 
-- Keeping track of their income and expenses
-- Categorizing their spending habits
-- Managing shared expenses among friends
-- Understanding where their money goes
+- Keeping track of personal spending vs shared group costs
+- Accurate bill splitting among multiple friends
+- Understanding spending habits through visualizations
+- Ensuring all participants are included in settlement balances
 
 **Solution**
 
-The Expense Management Website helps users by:
+iFinance helps users by:
 
--  Tracking income and expenses in one place
--  Categorizing transactions for better clarity
--  Splitting expenses with friends easily
--  Providing an activity log for financial transparency
-This helps users maintain a clear financial record and make informed decisions about their spending habits.
+- **Unified Tracking**: Income and expenses in one sleek dashboard
+- **Smart Split**: Automatic mathematical splitting of shared expenses
+- **Inclusive Settlement**: Ensures all friends are factored into balances, even if they haven't contributed yet
+- **Visual Analytics**: Gain clarity through turnover and category charts
+- **Secure UX**: Authentication guardrails and clean form states
 
 ## 🛠️ Technology Stack
 
-🔹 Frontend: React
-🔹 Backend: Node.js, Express.js
-🔹 Database: MongoDB
+🔹 **Frontend**: React, Tailwind CSS, Ant Design
+🔹 **Backend**: Node.js, Express.js
+🔹 **Database**: MongoDB
+🔹 **Deployment**: Render
 
 ---
 
-![Screenshot 2025-03-19 102449](https://github.com/user-attachments/assets/1ac4f87e-6f1f-46f5-a75d-d529eeb1b6fe)
-
-
 ## Key Features
 
--  User Authentication: Secure login and logout functionality
--  Income & Expense Tracking: Easily add and view transactions
--  Expense Categorization: Organize spending into categories
--  Friends Section: Share and split expenses with friends
+- **User Authentication**: Secure login, signup, and Google OAuth integration
+- **Interactive Dashboard**: Add, edit, and delete transactions with ease
+- **Analytics View**: Real-time turnover and category-wise analysis
+- **Friends & Groups**: Add friends and split bills with automated transaction calculations
+- **Responsive Design**: optimized for both desktop and mobile with a modern hamburger menu
 
 --- 
 
-##  How to Run the Expense Management Website Locally
+## How to Run iFinance Locally
 Follow these steps to set up and run the project on your local system.
 
-📥 Step 1: Clone the Repository
+📥 **Step 1: Clone the Repository**
 ```sh
 git clone https://github.com/kalviumcommunity/Pranjal_S56_Capstone_expense_management.git
-cd expense-management-website
+cd Pranjal_S56_Capstone_expense_tracker_ifinance
 ```
 
-⚙ Step 2: Install Dependencies
-Navigate to the backend directory and install dependencies:
+⚙ **Step 2: Install Dependencies**
+Navigate to the Server directory and install dependencies:
 
 ```sh
-cd backend
+cd Server
 npm install
 ```
-Navigate to the frontend directory and install dependencies:
+Navigate to the client directory and install dependencies:
 ```sh
 cd ../client
 npm install
 ```
-▶ Step 3: Run the Frontend and Backend Servers
-1️⃣ Run the Backend Server:
 
+▶ **Step 3: Run the Frontend and Backend Servers**
+1️⃣ **Run the Backend Server**:
 ```sh
-cd ../backend
+cd ../Server
 npm start
 ```
-2️⃣ Run the Frontend Server:
-
+2️⃣ **Run the Frontend Server**:
 ```sh
-
 cd ../client
 npm run dev
 ```
-🌐 Step 4: Access the Application
 
-Frontend: Open your browser and go to:
+🌐 **Step 4: Access the Application**
+- Frontend: `http://localhost:5173`
+- Backend API: `http://localhost:3000`
 
-🔗 http://localhost:5174
+---
 
-Backend API: Accessible at:
+**🌍 Live Application**
 
-🔗 http://localhost:3000 (or the configured port)
+- **Frontend**: [iFinance Live](https://pranjal-s56-capstone-expense-tracker-d0ux.onrender.com/)  
+- **Backend API**: [Production Server (Render)](https://pranjal-s56-capstone-expense-tracker.onrender.com)
 
 ---
 
 **🐞 Troubleshooting**
-- Ensure all dependencies are correctly installed.
-- Check if the ports are not in conflict with other running services.
-- Review terminal logs for any errors.
-- You're all set to use Expense Management Website locally! 🚀
+- Ensure your `.env` file in the `Server` directory has the correct `MONGODB_URI` and `JWT_SECRET`.
+- Check if ports 3000 and 5173 are free.
+- Run `npm run build` if you encounter unexpected frontend issues.
 
-**🌍 Live Application**
+Developed with ❤️ for better financial clarity. 🚀
 
-- Frontend: [Expense Frontend](https://ifinance.netlify.app/)  
-- Backend: [Expense Backend](https://pranjal-s56-capstone-expense-management-2.onrender.com/)
 
 
